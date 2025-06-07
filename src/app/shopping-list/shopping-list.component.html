@@ -1,0 +1,33 @@
+<div class="shopping">
+  <h1 class="label">User's Shopping list</h1>
+  <div class="shopping-list">
+    <table>
+      <thead>
+        <tr>
+          <th>Ingredient</th>
+          <th>Quantity</th>
+          <th>Expiration</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="shoppingList.length === 0">
+        <tr>
+          <td colspan="4" style="text-align: center">Nothing in your list!</td>
+        </tr>
+      </tbody>
+      <tbody *ngFor="let item of shoppingList">
+        <tr>
+          <td>{{ item.ingredient.getName() }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>
+            {{ item.ingredient.getExpiration().getDate() }}/{{
+              item.ingredient.getExpiration().getMonth() + 1
+            }}/{{ item.ingredient.getExpiration().getFullYear() }}
+          </td>
+          <td>{{ item.ingredient.getPrice() }} PHP</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-shopping-edit></app-shopping-edit>
+</div>

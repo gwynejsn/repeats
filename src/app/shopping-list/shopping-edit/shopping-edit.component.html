@@ -1,0 +1,61 @@
+<form class="shopping-edit">
+  <div class="inputs" [formGroup]="shoppingEditInput">
+    <div class="input-div">
+      <label class="label" for="ingredient-name">Ingredient</label>
+      <input
+        id="ingredient-name"
+        name="ingredientName"
+        class="input"
+        type="text"
+        placeholder="ingredient..."
+        formControlName="ingredientName"
+        [ngClass]="{
+          'invalid-input': ingredientNameInvalid
+        }"
+      />
+      <p class="error-message" *ngIf="ingredientNameInvalid">
+        Invalid or missing ingredient name.
+      </p>
+    </div>
+
+    <div class="input-div">
+      <label class="label" for="quantity">Quantity</label>
+      <input
+        id="quantity"
+        name="quantity"
+        class="input"
+        type="number"
+        formControlName="quantity"
+        [ngClass]="{
+          'invalid-input': quantityInvalid
+        }"
+      />
+      <p class="error-message" *ngIf="quantityInvalid">Invalid quantity.</p>
+    </div>
+  </div>
+  <div ngModelGroup="buttons" class="btns-div">
+    <button
+      class="btn add"
+      type="submit"
+      (click)="add()"
+      [disabled]="
+        shoppingEditInput.get('ingredientName')?.invalid ||
+        shoppingEditInput.get('quantity')?.invalid
+      "
+    >
+      Add
+    </button>
+    <button
+      class="btn remove"
+      type="submit"
+      (click)="remove()"
+      [disabled]="
+        shoppingEditInput.get('ingredientName')?.invalid ||
+        shoppingEditInput.get('quantity')?.invalid
+      "
+    >
+      Remove
+    </button>
+    <button class="btn clear" type="submit" (click)="clear()">Clear</button>
+  </div>
+</form>

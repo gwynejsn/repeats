@@ -1,0 +1,13 @@
+<section class="meal-list">
+  <button class="btn new-recipe" [routerLink]="['new-recipe/edit']">
+    New recipe
+  </button>
+  <div class="list">
+    <app-meal-item
+      *ngFor="let meal of allMeals"
+      [meal]="meal"
+      [routerLink]="['/meals/', meal.getName()]"
+      routerLinkActive="router-link-active"
+    ></app-meal-item>
+  </div>
+</section>

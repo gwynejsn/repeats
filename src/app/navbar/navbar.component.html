@@ -1,0 +1,30 @@
+<header>
+  <nav class="main-nav">
+    <div class="left-nav">
+      <div class="logo" [routerLink]="['/']">
+        <h1>RepEats</h1>
+      </div>
+      <div class="navigation">
+        <ul class="pages">
+          <li class="meals">
+            <a [routerLink]="['/meals']" routerLinkActive="active">Meals</a>
+          </li>
+          <li class="shopping-list">
+            <a [routerLink]="['/shopping-list']" routerLinkActive="active"
+              >Shopping List</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="right-nav">
+      <div class="dropdown manage-recipe-dropdown">
+        <button>Manage</button>
+        <div class="dropdown-content">
+          <a>Save data</a>
+          <a>Fetch data</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

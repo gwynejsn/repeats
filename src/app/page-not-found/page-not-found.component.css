@@ -1,0 +1,12 @@
+.page-not-found {
+  padding-top: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-message {
+  text-align: center;
+  line-height: 2rem;
+  color: var(--color-danger-dark);
+}

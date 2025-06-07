@@ -1,0 +1,32 @@
+.shopping {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text);
+}
+.label {
+  margin: 2rem;
+}
+table {
+  width: 80vw;
+  table-layout: fixed;
+  margin-bottom: 2rem;
+}
+
+table,
+th,
+tr,
+td {
+  border-collapse: collapse;
+  padding: 1rem 1rem;
+  border: 1px solid var(--color-text);
+}
+
+th {
+  background-color: var(--color-warning);
+}
+
+td {
+  text-align: center;
+}

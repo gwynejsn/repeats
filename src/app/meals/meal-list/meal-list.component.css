@@ -1,0 +1,11 @@
+.list {
+  width: 25vw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.new-recipe {
+  background-color: var(--color-secondary);
+}

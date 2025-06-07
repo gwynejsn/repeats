@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Primary colors */
+  --color-primary: #81c784; /* Soft green */
+  --color-secondary: #ffb74d; /* Soft orange */
+
+  /* Neutrals */
+  --color-bg: #fefefe;
+  --color-surface: #fffbf4;
+  --color-border: #e6e6e6;
+  --color-text: #2c2c2c;
+  --color-muted: #888888;
+  --color-card: #ffd8d8;
+
+  /* Accent colors */
+  --color-success: #a5d6a7; /* Mellow green */
+  --color-warning: #ffe082; /* Soft yellow */
+  --color-danger: #ef9a9a; /* Soft red */
+  --color-danger-dark: #d40000; /* Dark red */
+  --color-info: #81d4fa; /* Light blue */
+
+  /* Shadow */
+  --shadow-elevated: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  /* Radius */
+  --radius: 8px;
+
+  --font-xs: 0.75rem; /* 12px */
+  --font-sm: 0.875rem; /* 14px */
+  --font-base: 1rem; /* 16px (default) */
+  --font-md: 1.125rem; /* 18px */
+  --font-lg: 1.25rem; /* 20px */
+  --font-xl: 1.5rem; /* 24px */
+  --font-2xl: 2rem; /* 32px */
+  --font-3xl: 2.5rem; /* 40px */
+  --font-4xl: 3rem; /* 48px */
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--color-bg);
+}

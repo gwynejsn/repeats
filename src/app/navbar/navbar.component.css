@@ -1,0 +1,67 @@
+header {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+  box-shadow: var(--shadow-elevated);
+  width: 100vw;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+li:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+li:active {
+  opacity: 0.7;
+}
+
+.main-nav {
+  font-size: var(--font-md);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 0 1rem;
+  margin-bottom: 2rem;
+}
+
+.left-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logo {
+  font-size: var(--font-xl);
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.logo:active {
+  opacity: 0.7;
+}
+
+.pages {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.right-nav {
+  display: flex;
+  align-items: center;
+}
+
+.manage {
+  background-color: var(--color-primary);
+}
+
+.active {
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--color-text);
+}

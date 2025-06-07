@@ -1,0 +1,49 @@
+.meal-picture-div {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.meal-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+}
+
+.meal-details {
+  background-color: var(--color-surface);
+  padding: 2em;
+  border-radius: var(--radius);
+  border: solid 3px var(--color-border);
+  width: 30vw;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.recipe-name {
+  margin-bottom: 0.5rem;
+  color: var(--color-primary);
+}
+
+.about-meal {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.meal-type {
+  font-style: italic;
+  font-size: var(--font-sm);
+}
+
+.nutrition-facts,
+.meal-ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

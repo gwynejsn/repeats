@@ -1,0 +1,61 @@
+<section class="meal-details" *ngIf="mealSelected">
+  <div class="meal-picture-div">
+    <img
+      class="meal-picture"
+      [src]="mealSelected.getImgSrc()"
+      [alt]="mealSelected.getName()"
+    />
+  </div>
+  <h2 class="recipe-name">{{ mealSelected.getName() }}</h2>
+  <div class="details">
+    <div class="about-meal">
+      <div>
+        <div class="meal-description">
+          {{ mealSelected.getDescription() }}
+        </div>
+        <div>
+          <p class="meal-type">Good for {{ mealSelected.getType() }}</p>
+        </div>
+      </div>
+
+      <div class="dropdown manage-recipe-dropdown">
+        <button>Manage Recipe</button>
+        <div class="dropdown-content">
+          <a>Add to shopping list</a>
+          <a [routerLink]="['edit']">Edit Recipe</a>
+          <a>Delete Recipe</a>
+        </div>
+      </div>
+
+      <div class="nutrition-facts" *ngIf="mealSelected.getNutritionFacts()">
+        <h3>Nutrition facts</h3>
+        <div>
+          <p class="short-descriptions">
+            Calories: {{ mealSelected.getNutritionFacts().calories }}g
+          </p>
+          <p>Protein: {{ mealSelected.getNutritionFacts().protein }}g</p>
+          <p>
+            Fats:
+            {{ mealSelected.getNutritionFacts().fats }}g
+          </p>
+          <p>
+            Carbohydrates: {{ mealSelected.getNutritionFacts().carbohydrates }}g
+          </p>
+          <p class="vitamins">Vitamins: {{ mealSelected.getVitamins() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="meal-ingredients">
+      <h3>Ingredients</h3>
+      <div>
+        <p
+          class="ingredient"
+          *ngFor="let ingredient of mealSelected.getIngredients(); index as i"
+        >
+          {{ i + 1 }}. {{ ingredient.getName() }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
