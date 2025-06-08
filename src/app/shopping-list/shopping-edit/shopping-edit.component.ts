@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
@@ -9,6 +10,7 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { of } from 'rxjs';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -22,7 +24,7 @@ export class ShoppingEditComponent {
   private fb = inject(FormBuilder);
 
   shoppingEditInput = this.fb.group({
-    ingredientName: ['', [Validators.required, this.ingredientExist()]],
+    ingredientName: ['', [Validators.required], [this.ingredientExistAsync()]],
     quantity: [1, [Validators.required, Validators.min(1)]],
   });
 
@@ -72,8 +74,21 @@ export class ShoppingEditComponent {
             ('' + control.value).toLowerCase().trim()
         );
       return !foundIngredient
-        ? { forbiddenName: { value: control.value } }
+        ? { notExistence: { value: control.value } }
         : null;
+    };
+  }
+
+  private ingredientExistAsync(): AsyncValidatorFn {
+    return (control: AbstractControl) => {
+      const foundIngredient = this.shoppingListService
+        .getAllAvailableIngredients()
+        .find(
+          (ingredient) =>
+            ingredient.getName().toLowerCase().trim() ===
+            ('' + control.value).toLowerCase().trim()
+        );
+      return of(foundIngredient ? null : { nonExistence: true });
     };
   }
 }

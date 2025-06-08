@@ -1,0 +1,22 @@
+.meal-picture-div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.meal-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+}
+
+.meal-edit {
+  background-color: var(--color-surface);
+  padding: 2em;
+  border-radius: var(--radius);
+  border: solid 3px var(--color-border);
+  width: 30vw;
+}

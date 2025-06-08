@@ -1,1 +1,119 @@
-<p>meal-edit works!</p>
+<form
+  class="meal-edit"
+  *ngIf="mealSelected"
+  [formGroup]="mealEdit!"
+  (ngSubmit)="onSubmit()"
+>
+  <div class="heading-info" formGroupName="headingInfo">
+    <h3>Main info of the meal</h3>
+    <div class="meal-picture-div">
+      <img
+        class="meal-picture"
+        [src]="previewImgSrc"
+        [alt]="mealSelected.getName()"
+      />
+      <input type="text" formControlName="imgSrc" />
+    </div>
+    <p>
+      Name:
+      <input
+        type="text"
+        class="meal-name"
+        [placeholder]="mealSelected.getName()"
+        formControlName="name"
+      />
+    </p>
+  </div>
+
+  <div class="details" formGroupName="details">
+    <div class="about-meal" formGroupName="aboutMeal">
+      <p>
+        Description:
+        <input
+          type="text"
+          class="meal-description"
+          [placeholder]="mealSelected.getDescription()"
+          formControlName="description"
+        />
+      </p>
+      <p>
+        Meal type:
+        <input
+          type="text"
+          class="meal-type"
+          [placeholder]="mealSelected.getType()"
+          formControlName="mealType"
+        />
+      </p>
+
+      <div
+        class="nutrition-facts"
+        *ngIf="mealSelected.getNutritionFacts()"
+        formGroupName="nutritionFacts"
+      >
+        <h3>Nutrition facts</h3>
+        <div>
+          <p class="short-descriptions">
+            Calories:
+            <input
+              type="text"
+              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              formControlName="calories"
+            />
+          </p>
+          <p>
+            Protein:
+            <input
+              type="text"
+              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              formControlName="protein"
+            />
+          </p>
+          <p>
+            Fats:
+            <input
+              type="text"
+              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              formControlName="fats"
+            />
+          </p>
+          <p>
+            Carbohydrates:
+            <input
+              type="text"
+              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              formControlName="carbohydrates"
+            />
+          </p>
+          <h3 *ngIf="vitamins.length > 0">Vitamins:</h3>
+          <div formArrayName="vitamins">
+            <div *ngFor="let vitamin of vitamins.controls; let i = index">
+              <input
+                type="text"
+                [formControlName]="i"
+                placeholder="add a vitamin..."
+              />
+            </div>
+            <button class="btn" (click)="addVitamin()">Add vitamins</button>
+          </div>
+        </div>
+      </div>
+      <div class="meal-ingredients" formArrayName="mealIngredients">
+        <h3>Ingredients</h3>
+        <div>
+          <input
+            type="text"
+            class="ingredient"
+            *ngFor="let ingredient of mealIngredients.controls; index as i"
+            [formControlName]="i"
+            placeholder="add an ingredient..."
+          />
+        </div>
+        <button class="btn" (click)="addIngredient()">Add ingredient</button>
+      </div>
+    </div>
+  </div>
+  <div class="actions">
+    <button class="btn" type="submit">save</button>
+  </div>
+</form>

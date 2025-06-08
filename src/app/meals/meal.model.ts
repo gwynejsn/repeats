@@ -51,6 +51,10 @@ export class Meal {
     return vitamins;
   }
 
+  public getVitaminsArray(): string[] {
+    return this.nutritionFacts.vitamins;
+  }
+
   public getIngredients(): Ingredient[] {
     return this.ingredients;
   }

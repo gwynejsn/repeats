@@ -66,11 +66,35 @@ export class MealsService {
     ]
   );
 
+  private allMeals = [
+    this.grilledChickenMeal,
+    this.salmonMeal,
+    this.oatmealMeal,
+  ];
+
   getAllMeals() {
-    return [this.grilledChickenMeal, this.salmonMeal, this.oatmealMeal];
+    return this.allMeals;
   }
 
   getMeal(name: string) {
     return this.getAllMeals().find((meal) => meal.getName() === name);
+  }
+
+  patchMeal(originalName: string, updatedMeal: Meal) {
+    const foundMeal = this.getMeal(originalName);
+    if (foundMeal) {
+      this.allMeals.forEach((meal) => {
+        if (meal.getName() === originalName) {
+          meal.setName(updatedMeal.getName());
+          meal.setType(updatedMeal.getType());
+          meal.setImgSrc(updatedMeal.getImgSrc());
+          meal.setDescription(updatedMeal.getDescription());
+          meal.setNutritionFacts(updatedMeal.getNutritionFacts());
+          meal.setIngredients(updatedMeal.getIngredients());
+        }
+      });
+    } else {
+      this.allMeals.push(updatedMeal);
+    }
   }
 }
