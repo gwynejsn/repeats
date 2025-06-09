@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Meal } from './meal.model';
 
@@ -66,24 +67,25 @@ export class MealsService {
     ]
   );
 
-  private allMeals = [
+  private allMeals$ = new BehaviorSubject([
     this.grilledChickenMeal,
     this.salmonMeal,
     this.oatmealMeal,
-  ];
+  ]);
 
-  getAllMeals() {
-    return this.allMeals;
+  getAllMeals(): Observable<Meal[]> {
+    return this.allMeals$;
   }
 
   getMeal(name: string) {
-    return this.getAllMeals().find((meal) => meal.getName() === name);
+    return this.allMeals$.value.find((meal) => meal.getName() === name);
   }
 
   patchMeal(originalName: string, updatedMeal: Meal) {
+    const mealsSnapshot = this.allMeals$.value;
     const foundMeal = this.getMeal(originalName);
     if (foundMeal) {
-      this.allMeals.forEach((meal) => {
+      mealsSnapshot.forEach((meal) => {
         if (meal.getName() === originalName) {
           meal.setName(updatedMeal.getName());
           meal.setType(updatedMeal.getType());
@@ -94,7 +96,15 @@ export class MealsService {
         }
       });
     } else {
-      this.allMeals.push(updatedMeal);
+      mealsSnapshot.push(updatedMeal);
     }
+    this.allMeals$.next(mealsSnapshot);
+  }
+
+  deleteMeal(originalName: string) {
+    const filteredMeals = this.allMeals$.value.filter(
+      (meal) => meal.getName() != originalName
+    );
+    this.allMeals$.next(filteredMeals);
   }
 }

@@ -1,10 +1,11 @@
 .meal-picture-div {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   width: 100%;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
+  margin: 1rem 0;
 }
 
 .meal-picture {
@@ -19,4 +20,40 @@
   border-radius: var(--radius);
   border: solid 3px var(--color-border);
   width: 30vw;
+}
+
+.meal-img-src {
+  width: 100%;
+  align-items: center;
+}
+
+.meal-img-src > input {
+  width: 80%;
+}
+
+.formGroup {
+  padding-top: 0.5rem;
+}
+
+.input {
+  margin: 0.2rem 0;
+}
+
+.btn {
+  margin: 0.5rem 0;
+  background-color: var(--color-secondary);
+}
+
+.submit-btn {
+  background-color: var(--color-primary);
+}
+
+.textarea-div {
+  display: flex;
+  flex-direction: column;
+}
+
+input.ng-invalid,
+textarea.ng-invalid {
+  border: solid 2px red;
 }

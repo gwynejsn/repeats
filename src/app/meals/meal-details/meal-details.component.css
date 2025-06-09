@@ -47,3 +47,7 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+.btn {
+  background-color: var(--color-secondary);
+}

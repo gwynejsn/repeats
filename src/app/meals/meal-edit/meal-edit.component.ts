@@ -5,8 +5,10 @@ import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
 import { Meal } from '../meal.model';
 import { MealsService } from '../meals.service';
@@ -20,8 +22,10 @@ import { MealsService } from '../meals.service';
 export class MealEditComponent implements OnInit {
   private mealsService = inject(MealsService);
   private shoppingListService = inject(ShoppingListService);
+  private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
+  private ingredientValidator = inject(IngredientValidator);
   mealSelected: Meal | undefined;
   mealEdit: FormGroup | undefined;
   previewImgSrc: string | undefined;
@@ -34,7 +38,7 @@ export class MealEditComponent implements OnInit {
         this.mealSelected = new Meal(
           'Name',
           'Specify Type',
-          'Link to image',
+          'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
           'Describe how you make the Meal.',
           {
             calories: 0,
@@ -50,20 +54,33 @@ export class MealEditComponent implements OnInit {
     this.previewImgSrc = this.mealSelected?.getImgSrc();
 
     this.mealEdit = this.fb.group({
-      headingInfo: this.fb.group({
+      imgInfo: this.fb.group({
         imgSrc: [this.mealSelected?.getImgSrc()],
-        name: [this.mealSelected?.getName()],
       }),
       details: this.fb.group({
         aboutMeal: this.fb.group({
-          description: [this.mealSelected?.getDescription()],
-          mealType: [this.mealSelected?.getType()],
+          name: [this.mealSelected?.getName(), [Validators.required]],
+          description: [
+            this.mealSelected?.getDescription(),
+            [Validators.required],
+          ],
+          mealType: [this.mealSelected?.getType(), [Validators.required]],
           nutritionFacts: this.fb.group({
-            calories: [this.mealSelected?.getNutritionFacts().calories],
-            protein: [this.mealSelected?.getNutritionFacts().protein],
-            fats: [this.mealSelected?.getNutritionFacts().fats],
+            calories: [
+              this.mealSelected?.getNutritionFacts().calories,
+              [Validators.required],
+            ],
+            protein: [
+              this.mealSelected?.getNutritionFacts().protein,
+              [Validators.required],
+            ],
+            fats: [
+              this.mealSelected?.getNutritionFacts().fats,
+              [Validators.required],
+            ],
             carbohydrates: [
               this.mealSelected?.getNutritionFacts().carbohydrates,
+              [Validators.required],
             ],
             vitamins: this.fb.array(
               this.mealSelected
@@ -73,15 +90,21 @@ export class MealEditComponent implements OnInit {
           }),
           mealIngredients: this.fb.array(
             this.mealSelected
-              ?.getIngredients()
-              .map((ingredient) => this.fb.control(ingredient.getName())) || []
+              ?.getIngredientsNames()
+              .map((ingredient: string) =>
+                this.fb.control(
+                  ingredient,
+                  [Validators.required],
+                  [this.ingredientValidator.ingredientExistAsync()]
+                )
+              ) || []
           ),
         }),
       }),
     });
 
     this.mealEdit
-      .get('headingInfo.imgSrc')
+      .get('imgInfo.imgSrc')
       ?.valueChanges.subscribe((value) => (this.previewImgSrc = value));
   }
 
@@ -96,11 +119,18 @@ export class MealEditComponent implements OnInit {
   }
 
   addVitamin() {
-    this.vitamins.push(this.fb.control(''));
+    this.vitamins.push(this.fb.control('', [Validators.required]));
   }
 
   addIngredient() {
-    this.mealIngredients.push(this.fb.control(''));
+    console.log('rel0sad');
+    this.mealIngredients.push(
+      this.fb.control(
+        '',
+        [Validators.required],
+        [this.ingredientValidator.ingredientExistAsync()]
+      )
+    );
   }
 
   onSubmit() {
@@ -109,10 +139,15 @@ export class MealEditComponent implements OnInit {
     if (this.mealEdit) {
       const formValue = this.mealEdit.value;
 
+      const ingredientListFound =
+        formValue.details.aboutMeal.mealIngredients.map((ingredient: string) =>
+          allIngredients.find((i) => i.stringCompareTo(ingredient))
+        );
+
       const updatedMeal = new Meal(
-        formValue.headingInfo.name,
+        formValue.details.aboutMeal.name,
         formValue.details.aboutMeal.mealType,
-        formValue.headingInfo.imgSrc,
+        formValue.imgInfo.imgSrc,
         formValue.details.aboutMeal.description,
         {
           calories: formValue.details.aboutMeal.nutritionFacts.calories,
@@ -122,14 +157,11 @@ export class MealEditComponent implements OnInit {
             formValue.details.aboutMeal.nutritionFacts.carbohydrates,
           vitamins: formValue.details.aboutMeal.nutritionFacts.vitamins,
         },
-        formValue.details.aboutMeal.mealIngredients.map(
-          (ingredient: string) => {
-            allIngredients.find((i) => i.getName() === ingredient);
-          }
-        )
+        ingredientListFound
       );
 
       this.mealsService.patchMeal(this.mealSelected?.getName()!, updatedMeal);
+      this.router.navigate(['/meals', this.mealSelected?.getName()]);
     }
   }
 }

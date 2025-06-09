@@ -19,13 +19,22 @@
       </div>
 
       <div class="dropdown manage-recipe-dropdown">
-        <button>Manage Recipe</button>
+        <button class="btn">Manage Recipe</button>
         <div class="dropdown-content">
-          <a>Add to shopping list</a>
+          <a (click)="addToShoppingList()">Add to shopping list</a>
           <a [routerLink]="['edit']">Edit Recipe</a>
-          <a>Delete Recipe</a>
+          <a (click)="confirmDeleteDiv = true">Delete Recipe</a>
         </div>
       </div>
+
+      <app-confirm-box
+        [message]="
+          'Are you sure you want to delete ' + mealSelected.getName() + '?'
+        "
+        continueButtonLabel="delete"
+        (continueDelete)="confirmDeleteMeal($event)"
+        *ngIf="confirmDeleteDiv"
+      ></app-confirm-box>
 
       <div class="nutrition-facts" *ngIf="mealSelected.getNutritionFacts()">
         <h3>Nutrition facts</h3>
@@ -51,9 +60,12 @@
       <div>
         <p
           class="ingredient"
-          *ngFor="let ingredient of mealSelected.getIngredients(); index as i"
+          *ngFor="
+            let ingredient of mealSelected.getIngredientsNames();
+            index as i
+          "
         >
-          {{ i + 1 }}. {{ ingredient.getName() }}
+          {{ i + 1 }}. {{ ingredient }}
         </p>
       </div>
     </div>

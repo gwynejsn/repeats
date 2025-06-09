@@ -58,6 +58,9 @@ export class Meal {
   public getIngredients(): Ingredient[] {
     return this.ingredients;
   }
+  public getIngredientsNames(): string[] {
+    return this.ingredients.map((i) => i.getName());
+  }
 
   // Setters
   public setName(name: string): void {

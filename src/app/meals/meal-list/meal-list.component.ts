@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Meal } from '../meal.model';
 import { MealsService } from '../meals.service';
 import { MealItemComponent } from './meal-item/meal-item.component';
 
@@ -10,8 +11,14 @@ import { MealItemComponent } from './meal-item/meal-item.component';
   templateUrl: './meal-list.component.html',
   styleUrl: './meal-list.component.css',
 })
-export class MealListComponent {
+export class MealListComponent implements OnInit {
   private mealsService = inject(MealsService);
 
-  allMeals = this.mealsService.getAllMeals();
+  allMeals: Meal[] | undefined;
+
+  ngOnInit(): void {
+    this.mealsService.getAllMeals().subscribe((subscription) => {
+      this.allMeals = subscription;
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { MealListComponent } from './meal-list/meal-list.component';
 
 @Component({
@@ -9,6 +9,4 @@ import { MealListComponent } from './meal-list/meal-list.component';
   templateUrl: './meals.component.html',
   styleUrl: './meals.component.css',
 })
-export class MealsComponent {
-  private activatedRouter = inject(ActivatedRoute);
-}
+export class MealsComponent {}

@@ -1,0 +1,11 @@
+<div class="pop-up confirm-box">
+  <h3 class="message">{{ message }}</h3>
+  <div class="actions">
+    <button class="btn continue" (click)="continueDelete.emit(true)">
+      {{ continueButtonLabel }}
+    </button>
+    <button class="btn cancel" (click)="continueDelete.emit(false)">
+      {{ cancelButtonLabel }}
+    </button>
+  </div>
+</div>

@@ -1,16 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
-  AbstractControl,
-  AsyncValidatorFn,
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { of } from 'rxjs';
+import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListService } from '../shopping-list.service';
 
 @Component({
@@ -22,9 +18,14 @@ import { ShoppingListService } from '../shopping-list.service';
 export class ShoppingEditComponent {
   private shoppingListService = inject(ShoppingListService);
   private fb = inject(FormBuilder);
+  private ingredientValidator = inject(IngredientValidator);
 
   shoppingEditInput = this.fb.group({
-    ingredientName: ['', [Validators.required], [this.ingredientExistAsync()]],
+    ingredientName: [
+      '',
+      [Validators.required],
+      [this.ingredientValidator.ingredientExistAsync()],
+    ],
     quantity: [1, [Validators.required, Validators.min(1)]],
   });
 
@@ -62,33 +63,5 @@ export class ShoppingEditComponent {
 
   clear() {
     this.shoppingListService.clearUserShoppingList();
-  }
-
-  private ingredientExist(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const foundIngredient = this.shoppingListService
-        .getAllAvailableIngredients()
-        .find(
-          (ingredient) =>
-            ingredient.getName().toLowerCase().trim() ===
-            ('' + control.value).toLowerCase().trim()
-        );
-      return !foundIngredient
-        ? { notExistence: { value: control.value } }
-        : null;
-    };
-  }
-
-  private ingredientExistAsync(): AsyncValidatorFn {
-    return (control: AbstractControl) => {
-      const foundIngredient = this.shoppingListService
-        .getAllAvailableIngredients()
-        .find(
-          (ingredient) =>
-            ingredient.getName().toLowerCase().trim() ===
-            ('' + control.value).toLowerCase().trim()
-        );
-      return of(foundIngredient ? null : { nonExistence: true });
-    };
   }
 }

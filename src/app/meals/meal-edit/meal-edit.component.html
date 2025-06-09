@@ -4,116 +4,129 @@
   [formGroup]="mealEdit!"
   (ngSubmit)="onSubmit()"
 >
-  <div class="heading-info" formGroupName="headingInfo">
-    <h3>Main info of the meal</h3>
+  <div class="img-info" formGroupName="imgInfo">
     <div class="meal-picture-div">
       <img
         class="meal-picture"
         [src]="previewImgSrc"
         [alt]="mealSelected.getName()"
       />
-      <input type="text" formControlName="imgSrc" />
+      <p class="meal-img-src">
+        Img url:
+        <input class="input" type="text" formControlName="imgSrc" />
+      </p>
     </div>
-    <p>
-      Name:
-      <input
-        type="text"
-        class="meal-name"
-        [placeholder]="mealSelected.getName()"
-        formControlName="name"
-      />
-    </p>
   </div>
 
   <div class="details" formGroupName="details">
+    <h3>Main info of the meal</h3>
+
     <div class="about-meal" formGroupName="aboutMeal">
       <p>
-        Description:
+        Name:
         <input
           type="text"
-          class="meal-description"
-          [placeholder]="mealSelected.getDescription()"
-          formControlName="description"
+          class="input meal-name"
+          [placeholder]="mealSelected.getName()"
+          formControlName="name"
         />
       </p>
+      <div class="textarea-div">
+        Description:
+        <textarea
+          class="textarea"
+          class="input meal-description"
+          [placeholder]="mealSelected.getDescription()"
+          formControlName="description"
+        ></textarea>
+      </div>
       <p>
         Meal type:
         <input
           type="text"
-          class="meal-type"
+          class="input meal-type"
           [placeholder]="mealSelected.getType()"
           formControlName="mealType"
         />
       </p>
 
       <div
-        class="nutrition-facts"
+        class="nutrition-facts formGroup"
         *ngIf="mealSelected.getNutritionFacts()"
         formGroupName="nutritionFacts"
       >
         <h3>Nutrition facts</h3>
         <div>
           <p class="short-descriptions">
-            Calories:
+            Calories (g):
             <input
+              class="input"
               type="text"
               [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
               formControlName="calories"
             />
           </p>
           <p>
-            Protein:
+            Protein (g):
             <input
+              class="input"
               type="text"
               [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
               formControlName="protein"
             />
           </p>
           <p>
-            Fats:
+            Fats (g):
             <input
+              class="input"
               type="text"
               [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
               formControlName="fats"
             />
           </p>
           <p>
-            Carbohydrates:
+            Carbohydrates (g):
             <input
+              class="input"
               type="text"
               [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
               formControlName="carbohydrates"
             />
           </p>
-          <h3 *ngIf="vitamins.length > 0">Vitamins:</h3>
-          <div formArrayName="vitamins">
+          <div formArrayName="vitamins" class="formGroup">
+            <h3 *ngIf="vitamins.length > 0">Vitamins:</h3>
             <div *ngFor="let vitamin of vitamins.controls; let i = index">
               <input
+                class="input"
                 type="text"
                 [formControlName]="i"
                 placeholder="add a vitamin..."
               />
             </div>
-            <button class="btn" (click)="addVitamin()">Add vitamins</button>
+            <button class="btn" type="button" (click)="addVitamin()">
+              Add vitamins
+            </button>
           </div>
         </div>
       </div>
-      <div class="meal-ingredients" formArrayName="mealIngredients">
+      <div class="meal-ingredients formGroup" formArrayName="mealIngredients">
         <h3>Ingredients</h3>
         <div>
           <input
             type="text"
-            class="ingredient"
+            class="input ingredient"
             *ngFor="let ingredient of mealIngredients.controls; index as i"
             [formControlName]="i"
             placeholder="add an ingredient..."
           />
         </div>
-        <button class="btn" (click)="addIngredient()">Add ingredient</button>
+        <button class="btn" type="button" (click)="addIngredient()">
+          Add ingredient
+        </button>
       </div>
     </div>
   </div>
   <div class="actions">
-    <button class="btn" type="submit">save</button>
+    <button class="btn submit-btn" type="submit">save</button>
   </div>
 </form>

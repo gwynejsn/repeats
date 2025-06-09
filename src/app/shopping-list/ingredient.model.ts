@@ -30,4 +30,13 @@ export class Ingredient {
   public setExpiration(expiration: Date): void {
     this.expiration = expiration;
   }
+
+  public compareTo(i: Ingredient): boolean {
+    return (
+      i.getName().toLocaleLowerCase().trim() === this.name.toLowerCase().trim()
+    );
+  }
+  public stringCompareTo(i: string): boolean {
+    return i.toLocaleLowerCase().trim() === this.name.toLowerCase().trim();
+  }
 }
