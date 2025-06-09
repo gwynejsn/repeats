@@ -4,10 +4,18 @@ export interface MealIngredient {
   ingredient: Ingredient;
   quantity: number;
 }
+
+export enum MealType {
+  BREAKFAST = 'Breakfast',
+  LUNCH = 'Lunch',
+  DINNER = 'Dinner',
+  UNDEFINED = 'Undefined',
+}
+
 export class Meal {
   constructor(
     private name: string,
-    private type: string,
+    private type: MealType,
     private imgSrc: string,
     private description: string,
     private nutritionFacts: {
@@ -25,7 +33,7 @@ export class Meal {
     return this.name;
   }
 
-  public getType(): string {
+  public getType(): MealType {
     return this.type;
   }
 
@@ -49,9 +57,12 @@ export class Meal {
 
   public getVitamins(): string {
     let vitamins = '';
-    const vit = this.nutritionFacts.vitamins;
-    for (let i = 0; i < vit.length; i++)
-      vitamins += i + 1 === vit.length ? vit[i] : vit[i] + ', ';
+    if (this.nutritionFacts.vitamins.length > 0) {
+      const vit = this.nutritionFacts.vitamins;
+      for (let i = 0; i < vit.length; i++)
+        vitamins += i + 1 === vit.length ? vit[i] : vit[i] + ', ';
+    } else vitamins = 'None';
+
     return vitamins;
   }
 
@@ -71,7 +82,7 @@ export class Meal {
     this.name = name;
   }
 
-  public setType(type: string): void {
+  public setType(type: MealType): void {
     this.type = type;
   }
 
@@ -95,5 +106,22 @@ export class Meal {
 
   public setIngredients(ingredients: MealIngredient[]) {
     this.ingredients = ingredients;
+  }
+
+  public static generateEmptyMeal(): Meal {
+    return new Meal(
+      '',
+      MealType.UNDEFINED,
+      '',
+      '',
+      {
+        calories: 0,
+        protein: 0,
+        fats: 0,
+        carbohydrates: 0,
+        vitamins: [],
+      },
+      []
+    );
   }
 }

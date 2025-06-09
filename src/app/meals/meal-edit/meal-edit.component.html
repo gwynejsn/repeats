@@ -10,6 +10,7 @@
         class="meal-picture"
         [src]="previewImgSrc"
         [alt]="mealSelected.getName()"
+        *ngIf="imgSrcProvided"
       />
       <p class="meal-img-src">
         Img url:
@@ -42,14 +43,12 @@
       </div>
       <p>
         Meal type:
-        <input
-          type="text"
-          class="input meal-type"
-          [placeholder]="mealSelected.getType()"
-          formControlName="mealType"
-        />
+        <select formControlName="mealType">
+          <option *ngFor="let type of mealTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
       </p>
-
       <div
         class="nutrition-facts formGroup"
         *ngIf="mealSelected.getNutritionFacts()"
@@ -95,13 +94,23 @@
           </p>
           <div formArrayName="vitamins" class="formGroup">
             <h3 *ngIf="vitamins.length > 0">Vitamins:</h3>
-            <div *ngFor="let vitamin of vitamins.controls; let i = index">
+            <div
+              class="vitamin-input"
+              *ngFor="let vitamin of vitamins.controls; let i = index"
+            >
               <input
                 class="input"
                 type="text"
                 [formControlName]="i"
                 placeholder="add a vitamin..."
               />
+              <button
+                class="btn delete-vitamin"
+                type="button"
+                (click)="this.vitamins.removeAt(i)"
+              >
+                x
+              </button>
             </div>
             <button class="btn" type="button" (click)="addVitamin()">
               Add vitamins
@@ -111,18 +120,29 @@
       </div>
       <div class="meal-ingredients formGroup" formGroupName="mealIngredients">
         <div class="ingredients" formArrayName="ingredients">
-          <h3>Ingredients</h3>
-          <input
+          <h3 *ngIf="ingredients.controls.length > 0">Ingredients</h3>
+          <div
+            class="ingredient-div"
             *ngFor="let ingredient of ingredients.controls; let i = index"
-            type="text"
-            class="input ingredient"
-            [formControlName]="i"
-            placeholder="add an ingredient..."
-          />
+          >
+            <input
+              type="text"
+              class="input ingredient"
+              [formControlName]="i"
+              placeholder="add an ingredient..."
+            />
+            <button
+              class="btn delete-ingredient"
+              type="button"
+              (click)="ingredients.removeAt(i); quantities.removeAt(i)"
+            >
+              x
+            </button>
+          </div>
         </div>
 
         <div class="quantities" formGroupName="quantities">
-          <h3>Quantity</h3>
+          <h3 *ngIf="ingredients.controls.length > 0">Quantity</h3>
           <input
             *ngFor="let quantity of quantities.controls; let i = index"
             id="quantity"
@@ -139,6 +159,11 @@
     </div>
   </div>
   <div class="actions">
-    <button class="btn submit-btn" type="submit">save</button>
+    <button class="btn submit" type="submit" [disabled]="mealEdit?.invalid">
+      save
+    </button>
+    <button class="btn cancel-edit" type="button" (click)="cancelEdit()">
+      cancel
+    </button>
   </div>
 </form>

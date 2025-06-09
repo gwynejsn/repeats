@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
-import { Meal, MealIngredient } from '../meal.model';
+import { Meal, MealIngredient, MealType } from '../meal.model';
 import { MealsService } from '../meals.service';
 
 @Component({
@@ -26,29 +26,17 @@ export class MealEditComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private ingredientValidator = inject(IngredientValidator);
+  newMeal = false;
   mealSelected: Meal | undefined;
   mealEdit: FormGroup | undefined;
   previewImgSrc: string | undefined;
+  mealTypes = Object.values(MealType);
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((param) => {
       const foundMeal = this.mealsService.getMeal(param['meal-name']);
       if (foundMeal) this.mealSelected = foundMeal;
-      else
-        this.mealSelected = new Meal(
-          'Name',
-          'Specify Type',
-          'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
-          'Describe how you make the Meal.',
-          {
-            calories: 0,
-            protein: 0,
-            fats: 0,
-            carbohydrates: 0,
-            vitamins: [],
-          },
-          []
-        );
+      else this.mealSelected = Meal.generateEmptyMeal();
     });
 
     this.previewImgSrc = this.mealSelected?.getImgSrc();
@@ -117,6 +105,12 @@ export class MealEditComponent implements OnInit {
       ?.valueChanges.subscribe((value) => (this.previewImgSrc = value));
   }
 
+  get imgSrcProvided() {
+    return (<FormArray>this.mealEdit?.get('imgInfo.imgSrc')).value.length > 0
+      ? true
+      : false;
+  }
+
   get vitamins() {
     return this.mealEdit?.get(
       'details.aboutMeal.nutritionFacts.vitamins'
@@ -173,7 +167,9 @@ export class MealEditComponent implements OnInit {
       const updatedMeal = new Meal(
         formValue.details.aboutMeal.name,
         formValue.details.aboutMeal.mealType,
-        formValue.imgInfo.imgSrc,
+        this.imgSrcProvided
+          ? formValue.imgInfo.imgSrc
+          : 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
         formValue.details.aboutMeal.description,
         {
           calories: formValue.details.aboutMeal.nutritionFacts.calories,
@@ -189,5 +185,9 @@ export class MealEditComponent implements OnInit {
       this.mealsService.patchMeal(this.mealSelected?.getName()!, updatedMeal);
       this.router.navigate(['/meals', this.mealSelected?.getName()]);
     }
+  }
+
+  cancelEdit() {
+    this.router.navigate(['..'], { relativeTo: this.activatedRoute });
   }
 }

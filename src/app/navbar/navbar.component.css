@@ -28,6 +28,10 @@ li:active {
   margin-bottom: 2rem;
 }
 
+.btn {
+  background-color: var(--color-info);
+}
+
 .left-nav {
   display: flex;
   align-items: center;

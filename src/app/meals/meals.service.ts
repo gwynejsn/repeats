@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { Meal } from './meal.model';
+import { Meal, MealType } from './meal.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class MealsService {
   // Meals *will come from db in the future
   grilledChickenMeal = new Meal(
     'Grilled Chicken with Quinoa',
-    'Lunch',
+    MealType.LUNCH,
     'https://www.onceuponachef.com/images/2020/05/best-grilled-chicken-scaled.jpg',
     'A healthy grilled chicken served with quinoa and olive oil.',
     {
@@ -31,7 +31,7 @@ export class MealsService {
 
   salmonMeal = new Meal(
     'Lemon Garlic Salmon',
-    'Dinner',
+    MealType.DINNER,
     'https://www.themediterraneandish.com/wp-content/uploads/2024/09/TMD-Baked-Lemon-Garlic-Salmon-Leads-03-Vertical.jpg',
     'Baked salmon fillet with lemon and steamed broccoli.',
     {
@@ -50,7 +50,7 @@ export class MealsService {
 
   oatmealMeal = new Meal(
     'Oatmeal with Honey & Almond Milk',
-    'Breakfast',
+    MealType.BREAKFAST,
     'https://www.hauteandhealthyliving.com/wp-content/uploads/2022/04/best-creamy-oatmeal-with-almond-milk.jpg',
     'Warm oatmeal served with almond milk and honey.',
     {

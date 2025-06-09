@@ -44,7 +44,7 @@
   background-color: var(--color-secondary);
 }
 
-.submit-btn {
+.submit {
   background-color: var(--color-primary);
 }
 
@@ -53,8 +53,8 @@
   flex-direction: column;
 }
 
-input.ng-invalid,
-textarea.ng-invalid {
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
   border: solid 2px red;
 }
 
@@ -66,4 +66,24 @@ textarea.ng-invalid {
 
 .quantity {
   width: 80px;
+}
+
+.vitamin-input,
+.ingredient-div {
+  display: flex;
+  align-items: center;
+}
+
+.delete-vitamin,
+.delete-ingredient {
+  background-color: var(--color-danger);
+  margin: 0 1rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.cancel-edit {
+  background-color: var(--color-danger);
+  margin-left: 1rem;
 }
