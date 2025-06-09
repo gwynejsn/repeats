@@ -29,8 +29,11 @@ export class MealDetailsComponent implements OnInit {
   addToShoppingList() {
     this.mealSelected
       ?.getIngredients()
-      .forEach((ingredient) =>
-        this.shoppingListService.addToUserShoppingList(ingredient.getName(), 1)
+      .forEach((i) =>
+        this.shoppingListService.addToUserShoppingList(
+          i.ingredient.getName(),
+          i.quantity
+        )
       );
   }
 

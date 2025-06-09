@@ -23,9 +23,9 @@ export class MealsService {
       vitamins: ['B6', 'C'],
     },
     [
-      this.shoppingListService.chicken,
-      this.shoppingListService.quinoa,
-      this.shoppingListService.oliveOil,
+      { ingredient: this.shoppingListService.chicken, quantity: 1 },
+      { ingredient: this.shoppingListService.quinoa, quantity: 3 },
+      { ingredient: this.shoppingListService.oliveOil, quantity: 2 },
     ]
   );
 
@@ -42,9 +42,9 @@ export class MealsService {
       vitamins: ['D', 'B12', 'C'],
     },
     [
-      this.shoppingListService.salmon,
-      this.shoppingListService.broccoli,
-      this.shoppingListService.lemon,
+      { ingredient: this.shoppingListService.salmon, quantity: 1 },
+      { ingredient: this.shoppingListService.broccoli, quantity: 2 },
+      { ingredient: this.shoppingListService.lemon, quantity: 1 },
     ]
   );
 
@@ -61,9 +61,9 @@ export class MealsService {
       vitamins: ['E', 'B1'],
     },
     [
-      this.shoppingListService.oats,
-      this.shoppingListService.almondMilk,
-      this.shoppingListService.honey,
+      { ingredient: this.shoppingListService.oats, quantity: 1 },
+      { ingredient: this.shoppingListService.almondMilk, quantity: 1 },
+      { ingredient: this.shoppingListService.honey, quantity: 1 },
     ]
   );
 

@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
-import { Meal } from '../meal.model';
+import { Meal, MealIngredient } from '../meal.model';
 import { MealsService } from '../meals.service';
 
 @Component({
@@ -88,17 +88,26 @@ export class MealEditComponent implements OnInit {
                 .map((vitamin) => this.fb.control(vitamin)) || []
             ),
           }),
-          mealIngredients: this.fb.array(
-            this.mealSelected
-              ?.getIngredientsNames()
-              .map((ingredient: string) =>
-                this.fb.control(
-                  ingredient,
-                  [Validators.required],
-                  [this.ingredientValidator.ingredientExistAsync()]
-                )
-              ) || []
-          ),
+          mealIngredients: this.fb.group({
+            ingredients: this.fb.array(
+              this.mealSelected
+                ?.getIngredientsNames()
+                .map((ingredient: string) =>
+                  this.fb.control(
+                    ingredient,
+                    [Validators.required],
+                    [this.ingredientValidator.ingredientExistAsync()]
+                  )
+                ) || []
+            ),
+            quantities: this.fb.array(
+              this.mealSelected
+                ?.getIngredients()
+                .map((ingredient: MealIngredient) =>
+                  this.fb.control(ingredient.quantity)
+                ) || []
+            ),
+          }),
         }),
       }),
     });
@@ -114,8 +123,16 @@ export class MealEditComponent implements OnInit {
     ) as FormArray;
   }
 
-  get mealIngredients() {
-    return this.mealEdit?.get('details.aboutMeal.mealIngredients') as FormArray;
+  get ingredients() {
+    return this.mealEdit?.get(
+      'details.aboutMeal.mealIngredients.ingredients'
+    ) as FormArray;
+  }
+
+  get quantities() {
+    return this.mealEdit?.get(
+      'details.aboutMeal.mealIngredients.quantities'
+    ) as FormArray;
   }
 
   addVitamin() {
@@ -123,14 +140,14 @@ export class MealEditComponent implements OnInit {
   }
 
   addIngredient() {
-    console.log('rel0sad');
-    this.mealIngredients.push(
+    this.ingredients.push(
       this.fb.control(
         '',
         [Validators.required],
         [this.ingredientValidator.ingredientExistAsync()]
       )
     );
+    this.quantities.push(this.fb.control(1, [Validators.required]));
   }
 
   onSubmit() {
@@ -139,9 +156,18 @@ export class MealEditComponent implements OnInit {
     if (this.mealEdit) {
       const formValue = this.mealEdit.value;
 
+      const quantitiesArr =
+        formValue.details.aboutMeal.mealIngredients.quantities;
       const ingredientListFound =
-        formValue.details.aboutMeal.mealIngredients.map((ingredient: string) =>
-          allIngredients.find((i) => i.stringCompareTo(ingredient))
+        formValue.details.aboutMeal.mealIngredients.ingredients.map(
+          (ingredient: string, index: number) => {
+            return {
+              ingredient: allIngredients.find((i) =>
+                i.stringCompareTo(ingredient)
+              ),
+              quantity: quantitiesArr[index],
+            };
+          }
         );
 
       const updatedMeal = new Meal(

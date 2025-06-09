@@ -1,5 +1,9 @@
 import { Ingredient } from '../shopping-list/ingredient.model';
 
+export interface MealIngredient {
+  ingredient: Ingredient;
+  quantity: number;
+}
 export class Meal {
   constructor(
     private name: string,
@@ -13,7 +17,7 @@ export class Meal {
       carbohydrates: number;
       vitamins: string[];
     },
-    private ingredients: Ingredient[]
+    private ingredients: MealIngredient[]
   ) {}
 
   // Getters
@@ -55,11 +59,11 @@ export class Meal {
     return this.nutritionFacts.vitamins;
   }
 
-  public getIngredients(): Ingredient[] {
+  public getIngredients(): MealIngredient[] {
     return this.ingredients;
   }
   public getIngredientsNames(): string[] {
-    return this.ingredients.map((i) => i.getName());
+    return this.ingredients.map((i) => i.ingredient.getName());
   }
 
   // Setters
@@ -89,7 +93,7 @@ export class Meal {
     this.nutritionFacts = nutritionFacts;
   }
 
-  public setIngredients(ingredients: Ingredient[]) {
+  public setIngredients(ingredients: MealIngredient[]) {
     this.ingredients = ingredients;
   }
 }

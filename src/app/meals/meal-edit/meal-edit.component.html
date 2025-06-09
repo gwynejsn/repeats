@@ -109,21 +109,33 @@
           </div>
         </div>
       </div>
-      <div class="meal-ingredients formGroup" formArrayName="mealIngredients">
-        <h3>Ingredients</h3>
-        <div>
+      <div class="meal-ingredients formGroup" formGroupName="mealIngredients">
+        <div class="ingredients" formArrayName="ingredients">
+          <h3>Ingredients</h3>
           <input
+            *ngFor="let ingredient of ingredients.controls; let i = index"
             type="text"
             class="input ingredient"
-            *ngFor="let ingredient of mealIngredients.controls; index as i"
             [formControlName]="i"
             placeholder="add an ingredient..."
           />
         </div>
-        <button class="btn" type="button" (click)="addIngredient()">
-          Add ingredient
-        </button>
+
+        <div class="quantities" formGroupName="quantities">
+          <h3>Quantity</h3>
+          <input
+            *ngFor="let quantity of quantities.controls; let i = index"
+            id="quantity"
+            name="quantity"
+            class="input quantity"
+            type="number"
+            [formControlName]="i"
+          />
+        </div>
       </div>
+      <button class="btn" type="button" (click)="addIngredient()">
+        Add ingredient
+      </button>
     </div>
   </div>
   <div class="actions">

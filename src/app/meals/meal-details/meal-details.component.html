@@ -60,12 +60,9 @@
       <div>
         <p
           class="ingredient"
-          *ngFor="
-            let ingredient of mealSelected.getIngredientsNames();
-            index as i
-          "
+          *ngFor="let i of mealSelected.getIngredients(); index as c"
         >
-          {{ i + 1 }}. {{ ingredient }}
+          {{ c + 1 }}. {{ i.ingredient.getName() }} ({{ i.quantity }})
         </p>
       </div>
     </div>
