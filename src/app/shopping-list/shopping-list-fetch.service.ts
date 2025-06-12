@@ -69,7 +69,26 @@ export class ShoppingListFetchService {
     };
   }
 
+  private buildUniqueIngredient(
+    id: string,
+    raw: RawIngredientDTO
+  ): UniqueIngredient {
+    return {
+      id,
+      ingredient: new Ingredient(raw.name, raw.price, new Date(raw.expiration)),
+    };
+  }
+
+  private convertBackToIngredient(uniqueIngredient: UniqueIngredient) {
+    return new Ingredient(
+      uniqueIngredient.ingredient.getName(),
+      uniqueIngredient.ingredient.getPrice(),
+      uniqueIngredient.ingredient.getExpiration()
+    );
+  }
+
   // ========== AVAILABLE INGREDIENTS ==========
+
   public postAvailableIngredient(ingredient: Ingredient) {
     return this.http.post(
       this.availableIngredientsURL + '.json',
@@ -95,19 +114,19 @@ export class ShoppingListFetchService {
       );
   }
 
-  private buildUniqueIngredient(
-    id: string,
-    raw: RawIngredientDTO
-  ): UniqueIngredient {
-    return {
-      id,
-      ingredient: new Ingredient(raw.name, raw.price, new Date(raw.expiration)),
-    };
-  }
-
   public getAllAvailableIngredientsNotUnique(): Observable<Ingredient[]> {
     return this.getAllAvailableIngredients().pipe(
-      map((uniqueList) => uniqueList.map((u) => u.ingredient))
+      map((uniqueList) =>
+        uniqueList.map((u) => this.convertBackToIngredient(u))
+      )
+    );
+  }
+
+  public getASpecificAvailableIngredient(
+    name: string
+  ): Observable<Ingredient | undefined> {
+    return this.getAllAvailableIngredientsNotUnique().pipe(
+      map((ingredients) => ingredients.find((i) => i.getName() === name))
     );
   }
 
@@ -128,6 +147,7 @@ export class ShoppingListFetchService {
   }
 
   // ========== SHOPPING LIST ==========
+
   public postToShoppingList(item: IngredientListItem) {
     console.log('posting ');
     console.log(item);

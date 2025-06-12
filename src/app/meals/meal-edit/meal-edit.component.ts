@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
-import { Ingredient } from '../../shopping-list/ingredient.model';
 import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
 import { Meal, MealIngredient, MealType } from '../meal.model';
 import { MealsService } from '../meals.service';
@@ -145,48 +144,51 @@ export class MealEditComponent implements OnInit {
   }
 
   onSubmit() {
-    let allIngredients: Ingredient[];
     this.shoppingListFetchService
       .getAllAvailableIngredientsNotUnique()
-      .subscribe((ingredients) => (allIngredients = ingredients));
-    if (this.mealEdit) {
-      const formValue = this.mealEdit.value;
+      .subscribe((allIngredients) => {
+        if (this.mealEdit) {
+          const formValue = this.mealEdit.value;
 
-      const quantitiesArr =
-        formValue.details.aboutMeal.mealIngredients.quantities;
-      const ingredientListFound =
-        formValue.details.aboutMeal.mealIngredients.ingredients.map(
-          (ingredient: string, index: number) => {
-            return {
-              ingredient: allIngredients.find((i) =>
-                i.stringCompareTo(ingredient)
-              ),
-              quantity: quantitiesArr[index],
-            };
-          }
-        );
+          const quantitiesArr =
+            formValue.details.aboutMeal.mealIngredients.quantities;
+          const ingredientListFound =
+            formValue.details.aboutMeal.mealIngredients.ingredients.map(
+              (ingredient: string, index: number) => {
+                return {
+                  ingredient: allIngredients.find((i) =>
+                    i.stringCompareTo(ingredient)
+                  ),
+                  quantity: quantitiesArr[index],
+                };
+              }
+            );
 
-      const updatedMeal = new Meal(
-        formValue.details.aboutMeal.name,
-        formValue.details.aboutMeal.mealType,
-        this.imgSrcProvided
-          ? formValue.imgInfo.imgSrc
-          : 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
-        formValue.details.aboutMeal.description,
-        {
-          calories: formValue.details.aboutMeal.nutritionFacts.calories,
-          protein: formValue.details.aboutMeal.nutritionFacts.protein,
-          fats: formValue.details.aboutMeal.nutritionFacts.fats,
-          carbohydrates:
-            formValue.details.aboutMeal.nutritionFacts.carbohydrates,
-          vitamins: formValue.details.aboutMeal.nutritionFacts.vitamins,
-        },
-        ingredientListFound
-      );
+          const updatedMeal = new Meal(
+            formValue.details.aboutMeal.name,
+            formValue.details.aboutMeal.mealType,
+            this.imgSrcProvided
+              ? formValue.imgInfo.imgSrc
+              : 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=',
+            formValue.details.aboutMeal.description,
+            {
+              calories: formValue.details.aboutMeal.nutritionFacts.calories,
+              protein: formValue.details.aboutMeal.nutritionFacts.protein,
+              fats: formValue.details.aboutMeal.nutritionFacts.fats,
+              carbohydrates:
+                formValue.details.aboutMeal.nutritionFacts.carbohydrates,
+              vitamins: formValue.details.aboutMeal.nutritionFacts.vitamins,
+            },
+            ingredientListFound
+          );
 
-      this.mealsService.patchMeal(this.mealSelected?.getName()!, updatedMeal);
-      this.router.navigate(['/meals', this.mealSelected?.getName()]);
-    }
+          this.mealsService.patchMeal(
+            this.mealSelected?.getName()!,
+            updatedMeal
+          );
+          this.router.navigate(['/meals', this.mealSelected?.getName()]);
+        }
+      });
   }
 
   cancelEdit() {

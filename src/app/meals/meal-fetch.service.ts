@@ -145,6 +145,13 @@ export class MealFetchService {
     );
   }
 
+  public deleteAllMeals() {
+    console.log('deleting all meals');
+    return this.http.delete(
+      `https://repeats-angular-default-rtdb.firebaseio.com/meals.json`
+    );
+  }
+
   public patchMeal(mealId: string, meal: Meal) {
     return this.http.patch(
       `https://repeats-angular-default-rtdb.firebaseio.com/meals/${mealId}.json`,
