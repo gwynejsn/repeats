@@ -16,6 +16,11 @@
     </div>
   </div>
   <div class="image">
-    <img class="meal-img" [src]="meal.getImgSrc()" [alt]="meal.getName()" />
+    <img
+      class="meal-img"
+      [src]="meal.getImgSrc()"
+      [alt]="meal.getName()"
+      [ngStyle]="{ 'border-color': borderColor }"
+    />
   </div>
 </div>

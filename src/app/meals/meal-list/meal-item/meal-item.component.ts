@@ -1,12 +1,34 @@
-import { Component, Input } from '@angular/core';
-import { Meal } from '../../meal.model';
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit } from '@angular/core';
+import { Meal, MealType } from '../../meal.model';
 
+enum BorderColors {
+  BREAKFAST = '--color-breakfast',
+  LUNCH = '--color-lunch',
+  DINNER = '--color-dinner',
+}
 @Component({
   selector: 'app-meal-item',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './meal-item.component.html',
   styleUrl: './meal-item.component.css',
 })
-export class MealItemComponent {
+export class MealItemComponent implements OnInit {
   @Input({ required: true }) meal!: Meal;
+  borderColor!: string;
+  ngOnInit(): void {
+    switch (this.meal.getType()) {
+      case MealType.BREAKFAST:
+        this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
+        break;
+      case MealType.LUNCH:
+        this.borderColor = 'var(' + BorderColors.LUNCH + ')';
+        break;
+      case MealType.DINNER:
+        this.borderColor = 'var(' + BorderColors.DINNER + ')';
+        break;
+      default:
+        this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
+    }
+  }
 }

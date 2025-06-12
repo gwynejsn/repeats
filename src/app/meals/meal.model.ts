@@ -9,7 +9,7 @@ export enum MealType {
   BREAKFAST = 'Breakfast',
   LUNCH = 'Lunch',
   DINNER = 'Dinner',
-  UNDEFINED = 'Undefined',
+  ALL = 'All',
 }
 
 export class Meal {
@@ -111,7 +111,7 @@ export class Meal {
   public static generateEmptyMeal(): Meal {
     return new Meal(
       '',
-      MealType.UNDEFINED,
+      MealType.ALL,
       '',
       '',
       {
@@ -123,5 +123,29 @@ export class Meal {
       },
       []
     );
+  }
+
+  public toObject(): {
+    name: string;
+    type: MealType;
+    imgSrc: string;
+    description: string;
+    nutritionFacts: {
+      calories: number;
+      protein: number;
+      fats: number;
+      carbohydrates: number;
+      vitamins: string[];
+    };
+    ingredients: { ingredient: Ingredient; quantity: number }[];
+  } {
+    return {
+      name: this.name,
+      type: this.type,
+      imgSrc: this.imgSrc,
+      description: this.description,
+      nutritionFacts: this.nutritionFacts,
+      ingredients: this.ingredients,
+    };
   }
 }

@@ -3,13 +3,15 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  box-shadow: var(--shadow-elevated);
 }
 
 .meal-img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 100%;
   box-shadow: var(--shadow-elevated);
+  border: 3px solid;
 }
 
 .details {

@@ -26,7 +26,6 @@ export class MealEditComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private ingredientValidator = inject(IngredientValidator);
-  newMeal = false;
   mealSelected: Meal | undefined;
   mealEdit: FormGroup | undefined;
   previewImgSrc: string | undefined;

@@ -40,6 +40,10 @@
   --font-2xl: 2rem; /* 32px */
   --font-3xl: 2.5rem; /* 40px */
   --font-4xl: 3rem; /* 48px */
+
+  --color-breakfast: #ffd166; /* Sunny, bright yellow-orange */
+  --color-lunch: #06d6a0; /* Fresh, minty green */
+  --color-dinner: #118ab2; /* Calm, deep blue */
 }
 
 body {
