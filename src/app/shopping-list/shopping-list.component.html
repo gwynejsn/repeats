@@ -1,5 +1,21 @@
 <div class="shopping">
-  <h1 class="label">User's Shopping list</h1>
+  <div class="top-section">
+    <h1 class="label">User's Shopping list</h1>
+    <div class="search-div">
+      <input
+        type="text"
+        class="input search-bar"
+        placeholder="search an ingredient..."
+        [(ngModel)]="searchTerm"
+      />
+      <select class="sort-by" [(ngModel)]="sortBy">
+        <option *ngFor="let s of sortByValues" [value]="s">{{ s }}</option>
+      </select>
+      <select class="order" [(ngModel)]="order">
+        <option *ngFor="let o of orderValues" [value]="o">{{ o }}</option>
+      </select>
+    </div>
+  </div>
   <div class="shopping-list">
     <table>
       <thead>
@@ -15,7 +31,13 @@
           <td colspan="4" style="text-align: center">Nothing in your list!</td>
         </tr>
       </tbody>
-      <tbody *ngFor="let item of shoppingList">
+      <tbody
+        *ngFor="
+          let item of shoppingList
+            | ingredientSearch : searchTerm
+            | ingredientSort : sortBy : order
+        "
+      >
         <tr>
           <td>{{ item.ingredient.getName() }}</td>
           <td>{{ item.quantity }}</td>

@@ -6,7 +6,6 @@ import { Meal } from '../../meals/meal.model';
 })
 export class MealSearchPipe implements PipeTransform {
   transform(meals: Meal[], keyword: string): Meal[] {
-    console.log(keyword);
     let matchingMeals: Meal[] = [];
     meals.forEach((meal) => {
       if (meal.getName().toLowerCase().includes(keyword.toLocaleLowerCase()))

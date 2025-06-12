@@ -113,6 +113,8 @@ export class MealListComponent implements OnInit {
   ngOnInit(): void {
     this.mealsService.getAllMeals().subscribe((subscription) => {
       this.allMeals = subscription.map((uniqueMeal) => uniqueMeal.meal);
+      console.log('all meals');
+      console.log(this.allMeals);
     });
   }
 }

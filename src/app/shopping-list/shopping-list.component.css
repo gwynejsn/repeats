@@ -1,12 +1,22 @@
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 1rem;
+}
+
+.search-div {
+  display: flex;
+  gap: 1rem;
+}
+
 .shopping {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: var(--color-text);
-}
-.label {
-  margin: 2rem;
 }
 table {
   width: 80vw;

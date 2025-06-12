@@ -41,7 +41,7 @@ export class MealFetchService {
   private http = inject(HttpClient);
   private shoppingListService = inject(ShoppingListService);
 
-  buildRawMealDto(meal: Meal): RawMealDto {
+  private buildRawMealDto(meal: Meal): RawMealDto {
     const vitaminsArray = meal.getVitaminsArray();
     const ingredientsArray = meal.getIngredients();
 

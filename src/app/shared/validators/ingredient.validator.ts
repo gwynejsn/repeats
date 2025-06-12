@@ -5,17 +5,25 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { of } from 'rxjs';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+import { map } from 'rxjs';
+import { Ingredient } from '../../shopping-list/ingredient.model';
+import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
 
 @Injectable({ providedIn: 'root' })
 export class IngredientValidator {
-  private shoppingListService = inject(ShoppingListService);
+  private shoppingListFetchService = inject(ShoppingListFetchService);
+
   public ingredientExist(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const foundIngredient = this.shoppingListService
-        .getAllAvailableIngredients()
-        .find((ingredient) => ingredient.stringCompareTo(control.value + ''));
+      let foundIngredient: Ingredient | undefined;
+      this.shoppingListFetchService
+        .getAllAvailableIngredientsNotUnique()
+        .subscribe((availableIngredients) => {
+          foundIngredient = availableIngredients.find((ingredient) =>
+            ingredient.stringCompareTo(control.value + '')
+          );
+        });
+
       return !foundIngredient
         ? { notExistence: { value: control.value } }
         : null;
@@ -24,10 +32,16 @@ export class IngredientValidator {
 
   public ingredientExistAsync(): AsyncValidatorFn {
     return (control: AbstractControl) => {
-      const foundIngredient = this.shoppingListService
-        .getAllAvailableIngredients()
-        .find((ingredient) => ingredient.stringCompareTo(control.value + ''));
-      return of(foundIngredient ? null : { nonExistence: true });
+      return this.shoppingListFetchService
+        .getAllAvailableIngredientsNotUnique()
+        .pipe(
+          map((availableIngredients) => {
+            const found = availableIngredients.find((ingredient) =>
+              ingredient.stringCompareTo(control.value + '')
+            );
+            return found ? null : { nonExistence: true };
+          })
+        );
     };
   }
 }

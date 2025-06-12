@@ -9,7 +9,8 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+import { Ingredient } from '../../shopping-list/ingredient.model';
+import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
 import { Meal, MealIngredient, MealType } from '../meal.model';
 import { MealsService } from '../meals.service';
 
@@ -21,7 +22,7 @@ import { MealsService } from '../meals.service';
 })
 export class MealEditComponent implements OnInit {
   private mealsService = inject(MealsService);
-  private shoppingListService = inject(ShoppingListService);
+  private shoppingListFetchService = inject(ShoppingListFetchService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
@@ -144,8 +145,10 @@ export class MealEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const allIngredients =
-      this.shoppingListService.getAllAvailableIngredients();
+    let allIngredients: Ingredient[];
+    this.shoppingListFetchService
+      .getAllAvailableIngredientsNotUnique()
+      .subscribe((ingredients) => (allIngredients = ingredients));
     if (this.mealEdit) {
       const formValue = this.mealEdit.value;
 

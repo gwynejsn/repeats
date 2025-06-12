@@ -67,6 +67,7 @@ export class MealsService {
   }
 }
 
+// class MockData {
 // // Meals *will come from db in the future
 // grilledChickenMeal = new Meal(
 //   'Grilled Chicken with Quinoa',
@@ -124,3 +125,5 @@ export class MealsService {
 //     { ingredient: this.shoppingListService.honey, quantity: 1 },
 //   ]
 // );
+
+// }
