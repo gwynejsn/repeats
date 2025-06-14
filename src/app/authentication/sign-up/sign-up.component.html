@@ -1,0 +1,80 @@
+<section class="sign-up">
+  <div class="left">
+    <form
+      class="sign-up-form"
+      #signUpForm="ngForm"
+      (ngSubmit)="onSignUp(signUpForm.value)"
+    >
+      <h3 class="website-title">RepEats</h3>
+      <h4 class="welcome-label">Create Your Account</h4>
+      <div class="sign-up-inputs">
+        <div class="inputs">
+          <input
+            type="text"
+            class="input"
+            placeholder="Name"
+            name="name"
+            ngModel
+            required
+          />
+          <input
+            type="number"
+            class="input"
+            placeholder="Age"
+            name="age"
+            ngModel
+            required
+            min="0"
+          />
+          <select class="input" name="gender" ngModel required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <input
+            type="email"
+            class="input"
+            placeholder="Email"
+            name="email"
+            ngModel
+            required
+            email
+          />
+          <input
+            type="password"
+            class="input"
+            placeholder="Password"
+            name="password"
+            ngModel
+            required
+            minlength="6"
+          />
+        </div>
+
+        <div class="actions">
+          <button
+            class="btn submit"
+            type="submit"
+            [disabled]="signUpForm.invalid"
+          >
+            Sign Up
+          </button>
+          <button
+            class="btn submit"
+            type="button"
+            [routerLink]="['..', 'sign-in']"
+          >
+            Sign In
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="right">
+    <img
+      class="background"
+      src="https://www.diabetessa.org.za/wp-content/uploads/2023/02/Beginners-guide-to-healthy-eating.jpg"
+    />
+  </div>
+</section>

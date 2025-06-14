@@ -3,6 +3,7 @@ header {
   color: var(--color-text);
   box-shadow: var(--shadow-elevated);
   width: 100vw;
+  position: sticky;
 }
 
 a {
@@ -25,7 +26,6 @@ li:active {
   justify-content: space-between;
   padding: 1rem;
   margin: 0 1rem;
-  margin-bottom: 2rem;
 }
 
 .btn {

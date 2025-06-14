@@ -19,24 +19,19 @@ export class IngredientSortPipe implements PipeTransform {
         if (order === Order.INCREASING)
           return i.sort(
             (a, b) =>
-              a.ingredient.getExpiration().getTime() -
-              b.ingredient.getExpiration().getTime()
+              a.ingredient.expiration.getTime() -
+              b.ingredient.expiration.getTime()
           );
         else
           return i.sort(
             (a, b) =>
-              b.ingredient.getExpiration().getTime() -
-              a.ingredient.getExpiration().getTime()
+              b.ingredient.expiration.getTime() -
+              a.ingredient.expiration.getTime()
           );
       case SortBy.PRICE:
         if (order === Order.INCREASING)
-          return i.sort(
-            (a, b) => a.ingredient.getPrice() - b.ingredient.getPrice()
-          );
-        else
-          return i.sort(
-            (a, b) => b.ingredient.getPrice() - a.ingredient.getPrice()
-          );
+          return i.sort((a, b) => a.ingredient.price - b.ingredient.price);
+        else return i.sort((a, b) => b.ingredient.price - a.ingredient.price);
       case SortBy.QUANTITY:
         if (order === Order.INCREASING)
           return i.sort((a, b) => a.quantity - b.quantity);

@@ -42,27 +42,27 @@ export class MealFetchService {
   private shoppingListService = inject(ShoppingListService);
 
   private buildRawMealDto(meal: Meal): RawMealDto {
-    const vitaminsArray = meal.getVitaminsArray();
-    const ingredientsArray = meal.getIngredients();
+    const vitaminsArray = meal.vitaminsArray;
+    const ingredientsArray = meal.ingredients;
 
     return {
-      name: meal.getName(),
-      type: meal.getType(),
-      imgSrc: meal.getImgSrc(),
-      description: meal.getDescription(),
+      name: meal.name,
+      type: meal.type,
+      imgSrc: meal.imgSrc,
+      description: meal.description,
       nutritionFacts: {
-        calories: meal.getNutritionFacts().calories,
-        protein: meal.getNutritionFacts().protein,
-        fats: meal.getNutritionFacts().fats,
-        carbohydrates: meal.getNutritionFacts().carbohydrates,
+        calories: meal.nutritionFacts.calories,
+        protein: meal.nutritionFacts.protein,
+        fats: meal.nutritionFacts.fats,
+        carbohydrates: meal.nutritionFacts.carbohydrates,
         vitamins: vitaminsArray,
         vitaminsExist: vitaminsArray.length > 0,
       },
       ingredients: {
         ingredient: ingredientsArray.map((i) => ({
-          name: i.ingredient.getName(),
-          price: i.ingredient.getPrice(),
-          expiration: i.ingredient.getExpiration(),
+          name: i.ingredient.name,
+          price: i.ingredient.price,
+          expiration: i.ingredient.expiration,
           quantity: i.quantity,
         })),
       },

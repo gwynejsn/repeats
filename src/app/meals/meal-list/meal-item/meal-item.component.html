@@ -1,25 +1,25 @@
 <div class="meal-item card">
   <div class="details">
     <div>
-      <h3 class="meal-name">{{ meal.getName() }}</h3>
-      <p class="meal-type">Good for {{ meal.getType() }}</p>
+      <h3 class="meal-name">{{ meal.name }}</h3>
+      <p class="meal-type">Good for {{ meal.type }}</p>
     </div>
     <div class="nutrition-facts">
       <p class="short-descriptions">
-        Calories: {{ meal.getNutritionFacts().calories }}g
+        Calories: {{ meal.nutritionFacts.calories }}g
       </p>
-      <p>Protein: {{ meal.getNutritionFacts().protein }}g</p>
+      <p>Protein: {{ meal.nutritionFacts.protein }}g</p>
       <p>
         Fats:
-        {{ meal.getNutritionFacts().fats }}g
+        {{ meal.nutritionFacts.fats }}g
       </p>
     </div>
   </div>
   <div class="image">
     <img
       class="meal-img"
-      [src]="meal.getImgSrc()"
-      [alt]="meal.getName()"
+      [src]="meal.imgSrc"
+      [alt]="meal.name"
       [ngStyle]="{ 'border-color': borderColor }"
     />
   </div>

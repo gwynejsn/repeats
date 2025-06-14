@@ -13,8 +13,7 @@ export class IngredientSearchPipe implements PipeTransform {
     const matchingIngredientListItem: IngredientListItem[] = [];
     ingredientListItems.forEach((ingredientListItem) => {
       if (
-        ingredientListItem.ingredient
-          .getName()
+        ingredientListItem.ingredient.name
           .toLowerCase()
           .trim()
           .includes(keyword.toLowerCase().trim())

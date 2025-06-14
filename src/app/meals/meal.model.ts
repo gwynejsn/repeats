@@ -14,101 +14,96 @@ export enum MealType {
 
 export class Meal {
   constructor(
-    private name: string,
-    private type: MealType,
-    private imgSrc: string,
-    private description: string,
-    private nutritionFacts: {
+    private _name: string,
+    private _type: MealType,
+    private _imgSrc: string,
+    private _description: string,
+    private _nutritionFacts: {
       calories: number;
       protein: number;
       fats: number;
       carbohydrates: number;
       vitamins: string[];
     },
-    private ingredients: MealIngredient[]
+    private _ingredients: MealIngredient[]
   ) {}
 
   // Getters
-  public getName(): string {
-    return this.name;
+  get name(): string {
+    return this._name;
   }
 
-  public getType(): MealType {
-    return this.type;
+  get type(): MealType {
+    return this._type;
   }
 
-  public getImgSrc(): string {
-    return this.imgSrc;
+  get imgSrc(): string {
+    return this._imgSrc;
   }
 
-  public getDescription(): string {
-    return this.description;
+  get description(): string {
+    return this._description;
   }
 
-  public getNutritionFacts(): {
+  get nutritionFacts(): {
     calories: number;
     protein: number;
     fats: number;
     carbohydrates: number;
     vitamins: string[];
   } {
-    return this.nutritionFacts;
+    return this._nutritionFacts;
   }
 
-  public getVitamins(): string {
-    let vitamins = '';
-    if (this.nutritionFacts.vitamins.length > 0) {
-      const vit = this.nutritionFacts.vitamins;
-      for (let i = 0; i < vit.length; i++)
-        vitamins += i + 1 === vit.length ? vit[i] : vit[i] + ', ';
-    } else vitamins = 'None';
-
-    return vitamins;
+  get vitamins(): string {
+    const vit = this._nutritionFacts.vitamins;
+    return vit.length > 0 ? vit.join(', ') : 'None';
   }
 
-  public getVitaminsArray(): string[] {
-    return this.nutritionFacts.vitamins;
+  get vitaminsArray(): string[] {
+    return this._nutritionFacts.vitamins;
   }
 
-  public getIngredients(): MealIngredient[] {
-    return this.ingredients;
+  get ingredients(): MealIngredient[] {
+    return this._ingredients;
   }
-  public getIngredientsNames(): string[] {
-    return this.ingredients.map((i) => i.ingredient.getName());
+
+  get ingredientsNames(): string[] {
+    return this._ingredients.map((i) => i.ingredient.name);
   }
 
   // Setters
-  public setName(name: string): void {
-    this.name = name;
+  set name(value: string) {
+    this._name = value;
   }
 
-  public setType(type: MealType): void {
-    this.type = type;
+  set type(value: MealType) {
+    this._type = value;
   }
 
-  public setImgSrc(imgSrc: string): void {
-    this.imgSrc = imgSrc;
+  set imgSrc(value: string) {
+    this._imgSrc = value;
   }
 
-  public setDescription(description: string): void {
-    this.description = description;
+  set description(value: string) {
+    this._description = value;
   }
 
-  public setNutritionFacts(nutritionFacts: {
+  set nutritionFacts(value: {
     calories: number;
     protein: number;
     fats: number;
     carbohydrates: number;
     vitamins: string[];
-  }): void {
-    this.nutritionFacts = nutritionFacts;
+  }) {
+    this._nutritionFacts = value;
   }
 
-  public setIngredients(ingredients: MealIngredient[]) {
-    this.ingredients = ingredients;
+  set ingredients(value: MealIngredient[]) {
+    this._ingredients = value;
   }
 
-  public static generateEmptyMeal(): Meal {
+  static generateEmptyMeal(): Meal {
     return new Meal(
       '',
       MealType.ALL,
@@ -125,7 +120,7 @@ export class Meal {
     );
   }
 
-  public toObject(): {
+  toObject(): {
     name: string;
     type: MealType;
     imgSrc: string;
@@ -137,15 +132,15 @@ export class Meal {
       carbohydrates: number;
       vitamins: string[];
     };
-    ingredients: { ingredient: Ingredient; quantity: number }[];
+    ingredients: MealIngredient[];
   } {
     return {
-      name: this.name,
-      type: this.type,
-      imgSrc: this.imgSrc,
-      description: this.description,
-      nutritionFacts: this.nutritionFacts,
-      ingredients: this.ingredients,
+      name: this._name,
+      type: this._type,
+      imgSrc: this._imgSrc,
+      description: this._description,
+      nutritionFacts: this._nutritionFacts,
+      ingredients: this._ingredients,
     };
   }
 }

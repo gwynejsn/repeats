@@ -37,9 +37,9 @@ export class ShoppingListFetchService {
 
   private buildRawIngredientDTO(ingredient: Ingredient): RawIngredientDTO {
     return {
-      name: ingredient.getName(),
-      price: ingredient.getPrice(),
-      expiration: ingredient.getExpiration().toISOString(),
+      name: ingredient.name,
+      price: ingredient.price,
+      expiration: ingredient.expiration.toISOString(),
     };
   }
 
@@ -81,9 +81,9 @@ export class ShoppingListFetchService {
 
   private convertBackToIngredient(uniqueIngredient: UniqueIngredient) {
     return new Ingredient(
-      uniqueIngredient.ingredient.getName(),
-      uniqueIngredient.ingredient.getPrice(),
-      uniqueIngredient.ingredient.getExpiration()
+      uniqueIngredient.ingredient.name,
+      uniqueIngredient.ingredient.price,
+      uniqueIngredient.ingredient.expiration
     );
   }
 
@@ -126,7 +126,7 @@ export class ShoppingListFetchService {
     name: string
   ): Observable<Ingredient | undefined> {
     return this.getAllAvailableIngredientsNotUnique().pipe(
-      map((ingredients) => ingredients.find((i) => i.getName() === name))
+      map((ingredients) => ingredients.find((i) => i.name === name))
     );
   }
 

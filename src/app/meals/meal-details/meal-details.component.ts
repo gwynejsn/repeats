@@ -27,14 +27,12 @@ export class MealDetailsComponent implements OnInit {
   }
 
   addToShoppingList() {
-    this.mealSelected
-      ?.getIngredients()
-      .forEach((i) =>
-        this.shoppingListService.addToUserShoppingList(
-          i.ingredient.getName(),
-          i.quantity
-        )
-      );
+    this.mealSelected?.ingredients.forEach((i) =>
+      this.shoppingListService.addToUserShoppingList(
+        i.ingredient.name,
+        i.quantity
+      )
+    );
   }
 
   confirmDeleteMeal(continueDelete: boolean) {
@@ -42,7 +40,7 @@ export class MealDetailsComponent implements OnInit {
   }
 
   deleteMeal() {
-    this.mealsService.deleteMeal(this.mealSelected?.getName()!);
+    this.mealsService.deleteMeal(this.mealSelected?.name!);
     this.router.navigate(['/meals']);
   }
 }

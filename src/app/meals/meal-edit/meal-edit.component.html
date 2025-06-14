@@ -9,7 +9,7 @@
       <img
         class="meal-picture"
         [src]="previewImgSrc"
-        [alt]="mealSelected.getName()"
+        [alt]="mealSelected.name"
         *ngIf="imgSrcProvided"
       />
       <p class="meal-img-src">
@@ -28,7 +28,7 @@
         <input
           type="text"
           class="input meal-name"
-          [placeholder]="mealSelected.getName()"
+          [placeholder]="mealSelected.name"
           formControlName="name"
         />
       </p>
@@ -37,7 +37,7 @@
         <textarea
           class="textarea"
           class="input meal-description"
-          [placeholder]="mealSelected.getDescription()"
+          [placeholder]="mealSelected.description"
           formControlName="description"
         ></textarea>
       </div>
@@ -51,7 +51,7 @@
       </p>
       <div
         class="nutrition-facts formGroup"
-        *ngIf="mealSelected.getNutritionFacts()"
+        *ngIf="mealSelected.nutritionFacts"
         formGroupName="nutritionFacts"
       >
         <h3>Nutrition facts</h3>
@@ -61,7 +61,7 @@
             <input
               class="input"
               type="number"
-              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              [placeholder]="mealSelected.nutritionFacts.calories + 'g'"
               formControlName="calories"
             />
           </p>
@@ -70,7 +70,7 @@
             <input
               class="input"
               type="number"
-              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              [placeholder]="mealSelected.nutritionFacts.calories + 'g'"
               formControlName="protein"
             />
           </p>
@@ -79,7 +79,7 @@
             <input
               class="input"
               type="number"
-              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              [placeholder]="mealSelected.nutritionFacts.calories + 'g'"
               formControlName="fats"
             />
           </p>
@@ -88,7 +88,7 @@
             <input
               class="input"
               type="number"
-              [placeholder]="mealSelected.getNutritionFacts().calories + 'g'"
+              [placeholder]="mealSelected.nutritionFacts.calories + 'g'"
               formControlName="carbohydrates"
             />
           </p>

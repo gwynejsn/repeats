@@ -2,19 +2,19 @@
   <div class="meal-picture-div">
     <img
       class="meal-picture"
-      [src]="mealSelected.getImgSrc()"
-      [alt]="mealSelected.getName()"
+      [src]="mealSelected.imgSrc"
+      [alt]="mealSelected.name"
     />
   </div>
-  <h2 class="meal-name">{{ mealSelected.getName() }}</h2>
+  <h2 class="meal-name">{{ mealSelected.name }}</h2>
   <div class="details">
     <div class="about-meal">
       <div>
         <div class="meal-description">
-          {{ mealSelected.getDescription() }}
+          {{ mealSelected.description }}
         </div>
         <div>
-          <p class="meal-type">Good for {{ mealSelected.getType() }}</p>
+          <p class="meal-type">Good for {{ mealSelected.type }}</p>
         </div>
       </div>
 
@@ -28,29 +28,25 @@
       </div>
 
       <app-confirm-box
-        [message]="
-          'Are you sure you want to delete ' + mealSelected.getName() + '?'
-        "
+        [message]="'Are you sure you want to delete ' + mealSelected.name + '?'"
         continueButtonLabel="delete"
         (continueDelete)="confirmDeleteMeal($event)"
         *ngIf="confirmDeleteDiv"
       ></app-confirm-box>
 
-      <div class="nutrition-facts" *ngIf="mealSelected.getNutritionFacts()">
+      <div class="nutrition-facts" *ngIf="mealSelected.nutritionFacts">
         <h3>Nutrition facts</h3>
         <div>
           <p class="short-descriptions">
-            Calories: {{ mealSelected.getNutritionFacts().calories }}g
+            Calories: {{ mealSelected.nutritionFacts.calories }}g
           </p>
-          <p>Protein: {{ mealSelected.getNutritionFacts().protein }}g</p>
+          <p>Protein: {{ mealSelected.nutritionFacts.protein }}g</p>
           <p>
             Fats:
-            {{ mealSelected.getNutritionFacts().fats }}g
+            {{ mealSelected.nutritionFacts.fats }}g
           </p>
-          <p>
-            Carbohydrates: {{ mealSelected.getNutritionFacts().carbohydrates }}g
-          </p>
-          <p class="vitamins">Vitamins: {{ mealSelected.getVitamins() }}</p>
+          <p>Carbohydrates: {{ mealSelected.nutritionFacts.carbohydrates }}g</p>
+          <p class="vitamins">Vitamins: {{ mealSelected.vitamins }}</p>
         </div>
       </div>
     </div>
@@ -60,9 +56,9 @@
       <div>
         <p
           class="ingredient"
-          *ngFor="let i of mealSelected.getIngredients(); index as c"
+          *ngFor="let i of mealSelected.ingredients; index as c"
         >
-          {{ c + 1 }}. {{ i.ingredient.getName() }} ({{ i.quantity }})
+          {{ c + 1 }}. {{ i.ingredient.name }} ({{ i.quantity }})
         </p>
       </div>
     </div>

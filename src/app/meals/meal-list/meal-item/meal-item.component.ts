@@ -17,7 +17,7 @@ export class MealItemComponent implements OnInit {
   @Input({ required: true }) meal!: Meal;
   borderColor!: string;
   ngOnInit(): void {
-    switch (this.meal.getType()) {
+    switch (this.meal.type) {
       case MealType.BREAKFAST:
         this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
         break;

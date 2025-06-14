@@ -1,42 +1,41 @@
 export class Ingredient {
   constructor(
-    private name: string,
-    private price: number,
-    private expiration: Date
+    private _name: string,
+    private _price: number,
+    private _expiration: Date
   ) {}
 
   // Getters
-  public getName(): string {
-    return this.name;
+  get name(): string {
+    return this._name;
   }
 
-  public getPrice(): number {
-    return this.price;
+  get price(): number {
+    return this._price;
   }
 
-  public getExpiration(): Date {
-    return this.expiration;
+  get expiration(): Date {
+    return this._expiration;
   }
 
   // Setters
-  public setName(name: string): void {
-    this.name = name;
+  set name(value: string) {
+    this._name = value;
   }
 
-  public setPrice(price: number): void {
-    this.price = price;
+  set price(value: number) {
+    this._price = value;
   }
 
-  public setExpiration(expiration: Date): void {
-    this.expiration = expiration;
+  set expiration(value: Date) {
+    this._expiration = value;
   }
 
-  public compareTo(i: Ingredient): boolean {
-    return (
-      i.getName().toLocaleLowerCase().trim() === this.name.toLowerCase().trim()
-    );
+  compareTo(i: Ingredient): boolean {
+    return i.name.toLowerCase().trim() === this._name.toLowerCase().trim();
   }
-  public stringCompareTo(i: string): boolean {
-    return i.toLocaleLowerCase().trim() === this.name.toLowerCase().trim();
+
+  stringCompareTo(i: string): boolean {
+    return i.toLowerCase().trim() === this._name.toLowerCase().trim();
   }
 }

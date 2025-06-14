@@ -15,30 +15,6 @@ export interface IngredientListItem {
 })
 export class ShoppingListService {
   private shoppingListFetchService = inject(ShoppingListFetchService);
-  // Ingredients *mocked, will fetched from db in the future
-  // chicken = new Ingredient('Chicken Breast', 3.5, new Date('2025-06-15'));
-  // quinoa = new Ingredient('Quinoa', 2.0, new Date('2026-01-01'));
-  // oliveOil = new Ingredient('Olive Oil', 5.0, new Date('2026-12-31'));
-
-  // salmon = new Ingredient('Salmon Fillet', 6.0, new Date('2025-07-10'));
-  // broccoli = new Ingredient('Broccoli', 1.2, new Date('2025-06-20'));
-  // lemon = new Ingredient('Lemon', 0.5, new Date('2025-06-18'));
-
-  // oats = new Ingredient('Rolled Oats', 1.0, new Date('2026-03-01'));
-  // almondMilk = new Ingredient('Almond Milk', 2.5, new Date('2025-09-15'));
-  // honey = new Ingredient('Honey', 3.0, new Date('2027-01-01'));
-
-  // private availableIngredients = [
-  //   this.chicken,
-  //   this.quinoa,
-  //   this.oliveOil,
-  //   this.salmon,
-  //   this.broccoli,
-  //   this.lemon,
-  //   this.oats,
-  //   this.almondMilk,
-  //   this.honey,
-  // ];
 
   private userShoppingList$ = new BehaviorSubject<UniqueIngredientListItem[]>(
     []
@@ -64,7 +40,7 @@ export class ShoppingListService {
     const userShoppingList = this.userShoppingList$.value;
     const foundIngredient = userShoppingList.find(
       (element) =>
-        element.listItem.ingredient.getName().toLowerCase().trim() ===
+        element.listItem.ingredient.name.toLowerCase().trim() ===
         i.toLowerCase().trim()
     );
     if (foundIngredient) {
@@ -90,7 +66,7 @@ export class ShoppingListService {
     const userShoppingList = this.userShoppingList$.value;
     const foundInUserList = userShoppingList.find(
       (element) =>
-        element.listItem.ingredient.getName().toLowerCase().trim() ===
+        element.listItem.ingredient.name.toLowerCase().trim() ===
         i.toLowerCase().trim()
     );
 
@@ -112,7 +88,7 @@ export class ShoppingListService {
         .subscribe((uniqueIngredients) => {
           const matched = uniqueIngredients.find(
             (uniqueIngredient) =>
-              uniqueIngredient.ingredient.getName().toLowerCase().trim() ===
+              uniqueIngredient.ingredient.name.toLowerCase().trim() ===
               i.toLowerCase().trim()
           );
 
@@ -142,3 +118,28 @@ export class ShoppingListService {
       .subscribe(() => this.refetchShoppingList());
   }
 }
+
+// Ingredients *mocked, will fetched from db in the future
+// chicken = new Ingredient('Chicken Breast', 3.5, new Date('2025-06-15'));
+// quinoa = new Ingredient('Quinoa', 2.0, new Date('2026-01-01'));
+// oliveOil = new Ingredient('Olive Oil', 5.0, new Date('2026-12-31'));
+
+// salmon = new Ingredient('Salmon Fillet', 6.0, new Date('2025-07-10'));
+// broccoli = new Ingredient('Broccoli', 1.2, new Date('2025-06-20'));
+// lemon = new Ingredient('Lemon', 0.5, new Date('2025-06-18'));
+
+// oats = new Ingredient('Rolled Oats', 1.0, new Date('2026-03-01'));
+// almondMilk = new Ingredient('Almond Milk', 2.5, new Date('2025-09-15'));
+// honey = new Ingredient('Honey', 3.0, new Date('2027-01-01'));
+
+// private availableIngredients = [
+//   this.chicken,
+//   this.quinoa,
+//   this.oliveOil,
+//   this.salmon,
+//   this.broccoli,
+//   this.lemon,
+//   this.oats,
+//   this.almondMilk,
+//   this.honey,
+// ];

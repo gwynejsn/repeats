@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { SignInComponent } from './authentication/sign-in/sign-in.component';
+import { SignUpComponent } from './authentication/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { MealDetailsComponent } from './meals/meal-details/meal-details.component';
 import { MealEditComponent } from './meals/meal-edit/meal-edit.component';
@@ -11,6 +14,20 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'authentication',
+    component: AuthenticationComponent,
+    children: [
+      {
+        path: 'sign-in',
+        component: SignInComponent,
+      },
+      {
+        path: 'sign-up',
+        component: SignUpComponent,
+      },
+    ],
   },
   {
     path: 'meals',

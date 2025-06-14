@@ -33,14 +33,13 @@ export class MealsService {
   }
 
   getMeal(name: string) {
-    return this.getAllMealsNormal().find((meal) => meal.getName() === name);
+    return this.getAllMealsNormal().find((meal) => meal.name === name);
   }
 
   getMealId(name: string) {
     const foundUniqueMeal = this.allUniqueMeals$.value.find(
       (uniqueMeal) =>
-        uniqueMeal.meal.getName().toLowerCase().trim() ===
-        name.toLowerCase().trim()
+        uniqueMeal.meal.name.toLowerCase().trim() === name.toLowerCase().trim()
     );
     return foundUniqueMeal?.id;
   }
@@ -49,12 +48,12 @@ export class MealsService {
     const foundMeal = this.getMeal(originalName);
     const mealId = this.getMealId(originalName);
     if (foundMeal) {
-      foundMeal.setName(updatedMeal.getName());
-      foundMeal.setType(updatedMeal.getType());
-      foundMeal.setImgSrc(updatedMeal.getImgSrc());
-      foundMeal.setDescription(updatedMeal.getDescription());
-      foundMeal.setNutritionFacts(updatedMeal.getNutritionFacts());
-      foundMeal.setIngredients(updatedMeal.getIngredients());
+      foundMeal.name = updatedMeal.name;
+      foundMeal.type = updatedMeal.type;
+      foundMeal.imgSrc = updatedMeal.imgSrc;
+      foundMeal.description = updatedMeal.description;
+      foundMeal.nutritionFacts = updatedMeal.nutritionFacts;
+      foundMeal.ingredients = updatedMeal.ingredients;
       if (mealId)
         this.mealFetchService.patchMeal(mealId, foundMeal).subscribe();
     } else {
@@ -87,7 +86,7 @@ class MockData {
       .getAllAvailableIngredientsNotUnique()
       .subscribe((ingredients: Ingredient[]) => {
         const getIngredient = (name: string): Ingredient | undefined =>
-          ingredients.find((i) => i.getName() === name);
+          ingredients.find((i) => i.name === name);
 
         const grilledChickenMeal = new Meal(
           'Grilled Chicken with Quinoa',
@@ -158,8 +157,7 @@ class MockData {
 
   private postMeal(meal: Meal): void {
     this.mealFetchService.postMeal(meal).subscribe({
-      next: () =>
-        console.log(`✅ Posted meal: ${meal.getName?.() ?? 'Unnamed'}`),
+      next: () => console.log(`✅ Posted meal: ${meal.name ?? 'Unnamed'}`),
       error: (err) => console.error(`❌ Failed to post meal:`, err),
     });
   }

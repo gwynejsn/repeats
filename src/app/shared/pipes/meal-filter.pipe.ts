@@ -33,7 +33,7 @@ export class MealFilterPipe implements PipeTransform {
     if (!filter) return meals;
 
     return meals.filter((meal) => {
-      const facts = meal.getNutritionFacts();
+      const facts = meal.nutritionFacts;
 
       const inRange = (
         value: number,
@@ -48,7 +48,7 @@ export class MealFilterPipe implements PipeTransform {
       return (
         (!filter.mealType ||
           filter.mealType === MealType.ALL ||
-          meal.getType() === filter.mealType) &&
+          meal.type === filter.mealType) &&
         inRange(facts.calories, filter.nutritionFacts.calories) &&
         inRange(facts.protein, filter.nutritionFacts.protein) &&
         inRange(facts.fats, filter.nutritionFacts.fats) &&

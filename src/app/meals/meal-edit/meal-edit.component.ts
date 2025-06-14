@@ -10,7 +10,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
-import { Meal, MealIngredient, MealType } from '../meal.model';
+import { Meal, MealType } from '../meal.model';
 import { MealsService } from '../meals.service';
 
 @Component({
@@ -38,61 +38,54 @@ export class MealEditComponent implements OnInit {
       else this.mealSelected = Meal.generateEmptyMeal();
     });
 
-    this.previewImgSrc = this.mealSelected?.getImgSrc();
+    this.previewImgSrc = this.mealSelected?.imgSrc;
 
     this.mealEdit = this.fb.group({
       imgInfo: this.fb.group({
-        imgSrc: [this.mealSelected?.getImgSrc()],
+        imgSrc: [this.mealSelected?.imgSrc],
       }),
       details: this.fb.group({
         aboutMeal: this.fb.group({
-          name: [this.mealSelected?.getName(), [Validators.required]],
-          description: [
-            this.mealSelected?.getDescription(),
-            [Validators.required],
-          ],
-          mealType: [this.mealSelected?.getType(), [Validators.required]],
+          name: [this.mealSelected?.name, [Validators.required]],
+          description: [this.mealSelected?.description, [Validators.required]],
+          mealType: [this.mealSelected?.type, [Validators.required]],
           nutritionFacts: this.fb.group({
             calories: [
-              this.mealSelected?.getNutritionFacts().calories,
+              this.mealSelected?.nutritionFacts.calories,
               [Validators.required],
             ],
             protein: [
-              this.mealSelected?.getNutritionFacts().protein,
+              this.mealSelected?.nutritionFacts.protein,
               [Validators.required],
             ],
             fats: [
-              this.mealSelected?.getNutritionFacts().fats,
+              this.mealSelected?.nutritionFacts.fats,
               [Validators.required],
             ],
             carbohydrates: [
-              this.mealSelected?.getNutritionFacts().carbohydrates,
+              this.mealSelected?.nutritionFacts.carbohydrates,
               [Validators.required],
             ],
             vitamins: this.fb.array(
-              this.mealSelected
-                ?.getVitaminsArray()
-                .map((vitamin) => this.fb.control(vitamin)) || []
+              this.mealSelected?.vitaminsArray.map((vitamin) =>
+                this.fb.control(vitamin)
+              ) || []
             ),
           }),
           mealIngredients: this.fb.group({
             ingredients: this.fb.array(
-              this.mealSelected
-                ?.getIngredientsNames()
-                .map((ingredient: string) =>
-                  this.fb.control(
-                    ingredient,
-                    [Validators.required],
-                    [this.ingredientValidator.ingredientExistAsync()]
-                  )
-                ) || []
+              this.mealSelected?.ingredients.map((i) =>
+                this.fb.control(
+                  i.ingredient.name,
+                  [Validators.required],
+                  [this.ingredientValidator.ingredientExistAsync()]
+                )
+              ) || []
             ),
             quantities: this.fb.array(
-              this.mealSelected
-                ?.getIngredients()
-                .map((ingredient: MealIngredient) =>
-                  this.fb.control(ingredient.quantity)
-                ) || []
+              this.mealSelected?.ingredients.map((i) =>
+                this.fb.control(i.quantity)
+              ) || []
             ),
           }),
         }),
@@ -182,11 +175,8 @@ export class MealEditComponent implements OnInit {
             ingredientListFound
           );
 
-          this.mealsService.patchMeal(
-            this.mealSelected?.getName()!,
-            updatedMeal
-          );
-          this.router.navigate(['/meals', this.mealSelected?.getName()]);
+          this.mealsService.patchMeal(this.mealSelected?.name!, updatedMeal);
+          this.router.navigate(['/meals', this.mealSelected?.name]);
         }
       });
   }

@@ -39,14 +39,14 @@
         "
       >
         <tr>
-          <td>{{ item.ingredient.getName() }}</td>
+          <td>{{ item.ingredient.name }}</td>
           <td>{{ item.quantity }}</td>
           <td>
-            {{ item.ingredient.getExpiration().getDate() }}/{{
-              item.ingredient.getExpiration().getMonth() + 1
-            }}/{{ item.ingredient.getExpiration().getFullYear() }}
+            {{ item.ingredient.expiration.getDate() }}/{{
+              item.ingredient.expiration.getMonth() + 1
+            }}/{{ item.ingredient.expiration.getFullYear() }}
           </td>
-          <td>{{ item.ingredient.getPrice() }} PHP</td>
+          <td>{{ item.ingredient.price }} PHP</td>
         </tr>
       </tbody>
     </table>

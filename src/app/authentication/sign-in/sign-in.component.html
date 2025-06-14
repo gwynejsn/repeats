@@ -1,0 +1,57 @@
+<section class="sign-in">
+  <div class="left">
+    <img
+      class="background"
+      src="https://www.diabetessa.org.za/wp-content/uploads/2023/02/Beginners-guide-to-healthy-eating.jpg"
+    />
+  </div>
+  <div class="right">
+    <form
+      class="sign-in-form"
+      #signInForm="ngForm"
+      (ngSubmit)="onSignIn(signInForm.value)"
+    >
+      <h3 class="website-title">RepEats</h3>
+      <h4 class="welcome-label">Welcome Back!</h4>
+      <div class="sign-in-inputs">
+        <div class="inputs">
+          <input
+            type="email"
+            class="input"
+            placeholder="email"
+            name="email"
+            ngModel
+            required
+            email
+          />
+          <input
+            type="password"
+            class="input"
+            placeholder="password"
+            name="password"
+            ngModel
+            required
+            minlength="6"
+          />
+        </div>
+
+        <div class="actions">
+          <button
+            class="btn submit"
+            type="submit"
+            [disabled]="signInForm.invalid"
+          >
+            Sign in
+          </button>
+          <button
+            class="btn submit"
+            type="button"
+            [routerLink]="['..', 'sign-up']"
+          >
+            Sign up
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

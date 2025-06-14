@@ -8,7 +8,7 @@ export class MealSearchPipe implements PipeTransform {
   transform(meals: Meal[], keyword: string): Meal[] {
     let matchingMeals: Meal[] = [];
     meals.forEach((meal) => {
-      if (meal.getName().toLowerCase().includes(keyword.toLocaleLowerCase()))
+      if (meal.name.toLowerCase().includes(keyword.toLocaleLowerCase()))
         matchingMeals.push(meal);
     });
     return matchingMeals;
