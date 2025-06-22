@@ -1,1 +1,102 @@
-<p>home works!</p>
+<header class="hero">
+  <div class="greeting">
+    <h1>
+      Welcome to
+      <span class="brand">
+        RepEat<span class="leaf-wrapper">
+          <img
+            src="https://www.pngplay.com/wp-content/uploads/2/Green-Leaves-Transparent-Background.png"
+            alt="leaf"
+            class="leaf"
+          /> </span
+        >s
+      </span>
+    </h1>
+  </div>
+
+  <p class="tagline">
+    <strong>Your smart shopping list for nutrient-packed living.</strong>
+  </p>
+  <p class="description">
+    At RepEats, we make healthy eating simple, personal, and repeatable. Whether
+    you're building muscle, boosting energy, or just eating clean, we help you
+    stock your cart with foods that fuel your goals — and taste great doing it.
+  </p>
+  <div class="food-images">
+    <div
+      class="food-image"
+      *ngFor="let food of healthyFoods"
+      [ngStyle]="{ 'background-image': 'url(' + food.imgSrc }"
+      [routerLink]="handleFoodClicked()"
+    >
+      <div class="food-name">
+        {{ food.name }}
+      </div>
+    </div>
+  </div>
+</header>
+<!-- 
+<section class="why-repeats">
+  <h2>🌟 Why RepEats?</h2>
+  <ul>
+    <li>
+      <strong>✅ Personalized Lists:</strong> Tailor your shopping list to your
+      diet and goals – vegan, keto, or just smarter choices.
+    </li>
+    <li>
+      <strong>✅ Nutrient Insights:</strong> Get vitamin, mineral, and macro
+      breakdowns for every item.
+    </li>
+    <li>
+      <strong>✅ Smart Suggestions:</strong> Receive intelligent recommendations
+      to balance your nutrients.
+    </li>
+    <li>
+      <strong>✅ Visual Tracking:</strong> See your health progress as you shop
+      and repeat your best habits.
+    </li>
+  </ul>
+</section> -->
+<!--
+<section class="how-it-works">
+  <h2>🛒 How It Works</h2>
+  <ol>
+    <li>
+      <strong>Add Foods You Love:</strong> From avocado to salmon, start with
+      your favorites.
+    </li>
+    <li>
+      <strong>Learn What’s Inside:</strong> Understand each food’s nutrient
+      value.
+    </li>
+    <li>
+      <strong>Get Recommendations:</strong> Fill in nutrient gaps with smart
+      suggestions.
+    </li>
+    <li>
+      <strong>Save and Reuse:</strong> Your list stays with you every week.
+    </li>
+  </ol>
+</section>
+
+<section class="purpose">
+  <h2>🧠 Eat with Purpose. Repeat with Ease.</h2>
+  <p>
+    RepEats isn’t just a list — it’s a commitment to better living, one grocery
+    trip at a time.
+  </p>
+  <p>
+    Whether you're meal-prepping, shopping for the family, or staying
+    consistent, RepEats helps you build smarter habits — and stick to them.
+  </p>
+</section>
+
+<section class="cta">
+  <h2>🚀 Ready to elevate your grocery game?</h2>
+  <p><a href="#">👉 Get Started</a> or <a href="#">Log In</a></p>
+</section>
+
+<footer class="footer">
+  <p>🥑 Powered by knowledge. Backed by science. Made for you.</p>
+  <p><strong>RepEats</strong> – Repeat what fuels you.</p>
+</footer> -->

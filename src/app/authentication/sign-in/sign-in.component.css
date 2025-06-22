@@ -3,6 +3,7 @@
   height: 80vh;
   display: flex;
   box-shadow: var(--shadow-elevated);
+  margin-top: 7rem;
 }
 
 .left {
@@ -11,6 +12,7 @@
   position: relative; /* to position img absolutely inside */
   overflow: hidden;
   background-color: var(--color-secondary);
+  z-index: 50;
 }
 
 .background {

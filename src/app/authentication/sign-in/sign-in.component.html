@@ -5,11 +5,13 @@
       src="https://www.diabetessa.org.za/wp-content/uploads/2023/02/Beginners-guide-to-healthy-eating.jpg"
     />
   </div>
-  <div class="right">
+  <div class="right" #right>
+    <span class="loader" *ngIf="isLoading"></span>
     <form
       class="sign-in-form"
       #signInForm="ngForm"
       (ngSubmit)="onSignIn(signInForm.value)"
+      *ngIf="!isLoading"
     >
       <h3 class="website-title">RepEats</h3>
       <h4 class="welcome-label">Welcome Back!</h4>
@@ -33,6 +35,7 @@
             required
             minlength="6"
           />
+          <p class="error" *ngIf="hasError">{{ errorMessage }}</p>
         </div>
 
         <div class="actions">

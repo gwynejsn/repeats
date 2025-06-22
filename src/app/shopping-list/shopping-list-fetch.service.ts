@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { Ingredient } from './ingredient.model';
 import { IngredientListItem } from './shopping-list.service';
 
@@ -31,9 +32,13 @@ interface RawIngredientListItem {
 export class ShoppingListFetchService {
   private http = inject(HttpClient);
   private availableIngredientsURL =
-    'https://repeats-angular-default-rtdb.firebaseio.com/available-ingredients';
-  private shoppingListURL =
-    'https://repeats-angular-default-rtdb.firebaseio.com/shopping-list';
+    environment.apiUrl + '/available-ingredients';
+  private shoppingListURL = environment.apiUrl + '/shopping-list';
+
+  set setUserId(id: string) {
+    // available ingredients (overall stock) are globally available
+    this.shoppingListURL = environment.apiUrl + id + '/shopping-list';
+  }
 
   private buildRawIngredientDTO(ingredient: Ingredient): RawIngredientDTO {
     return {

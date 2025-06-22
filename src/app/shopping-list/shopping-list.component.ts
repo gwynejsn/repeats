@@ -35,6 +35,7 @@ export enum SortBy {
 })
 export class ShoppingListComponent implements OnInit {
   private shoppingListService = inject(ShoppingListService);
+
   sortByValues = Object.values(SortBy);
   orderValues = Object.values(Order);
 

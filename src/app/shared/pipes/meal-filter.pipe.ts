@@ -29,7 +29,8 @@ export interface MealFilterOptions {
   standalone: true,
 })
 export class MealFilterPipe implements PipeTransform {
-  transform(meals: Meal[], filter: MealFilterOptions): Meal[] {
+  transform(meals: Meal[] | null, filter: MealFilterOptions): Meal[] {
+    if (!meals) return [];
     if (!filter) return meals;
 
     return meals.filter((meal) => {

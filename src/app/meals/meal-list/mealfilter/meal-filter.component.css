@@ -1,0 +1,68 @@
+.filter-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  background-color: var(--color-surface);
+  padding: 1rem;
+  margin: 1rem;
+  box-shadow: var(--shadow-elevated);
+}
+
+.filter-menu > .actions {
+  justify-content: left;
+  padding: 0;
+  gap: 1rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+
+.filter-option.vitamin-filter {
+  flex-direction: column;
+  align-items: first baseline;
+}
+
+.vitamin {
+  display: flex;
+}
+
+.btn.remove {
+  background-color: var(--color-danger);
+  margin: 0 1rem;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.btn.vitamin {
+  background-color: var(--color-primary);
+}
+
+.input.number {
+  width: 80px;
+}
+
+.meal-search {
+  border-width: 2px;
+  box-shadow: var(--shadow-elevated);
+  margin-bottom: 1rem;
+}
+
+.btn.save {
+  background-color: var(--color-secondary);
+}
+
+.btn.cancel {
+  background-color: var(--color-danger);
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  margin: 0.5rem;
+}

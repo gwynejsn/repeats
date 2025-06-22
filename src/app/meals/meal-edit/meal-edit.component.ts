@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -8,10 +8,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { IngredientValidator } from '../../shared/validators/ingredient.validator';
 import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
 import { Meal, MealType } from '../meal.model';
 import { MealsService } from '../meals.service';
+import { selectMealSelected } from '../state/meals.selectors';
 
 @Component({
   selector: 'app-meal-edit',
@@ -19,27 +22,36 @@ import { MealsService } from '../meals.service';
   templateUrl: './meal-edit.component.html',
   styleUrl: './meal-edit.component.css',
 })
-export class MealEditComponent implements OnInit {
+export class MealEditComponent implements OnInit, OnDestroy {
   private mealsService = inject(MealsService);
   private shoppingListFetchService = inject(ShoppingListFetchService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private fb = inject(FormBuilder);
   private ingredientValidator = inject(IngredientValidator);
-  mealSelected: Meal | undefined;
+
+  private store$ = inject(Store);
+
+  mealSelected!: Meal | null;
   mealEdit: FormGroup | undefined;
   previewImgSrc: string | undefined;
   mealTypes = Object.values(MealType);
 
+  private subscriptions: Subscription[] = [];
+
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((param) => {
-      const foundMeal = this.mealsService.getMeal(param['meal-name']);
-      if (foundMeal) this.mealSelected = foundMeal;
-      else this.mealSelected = Meal.generateEmptyMeal();
-    });
+    const mealSub = this.store$
+      .pipe(select(selectMealSelected))
+      .subscribe((mealSelected) => {
+        this.mealSelected = mealSelected;
+        this.previewImgSrc = mealSelected?.imgSrc;
 
-    this.previewImgSrc = this.mealSelected?.imgSrc;
+        this.buildMealForm();
+      });
+    this.subscriptions.push(mealSub);
+  }
 
+  private buildMealForm(): void {
     this.mealEdit = this.fb.group({
       imgInfo: this.fb.group({
         imgSrc: [this.mealSelected?.imgSrc],
@@ -92,15 +104,16 @@ export class MealEditComponent implements OnInit {
       }),
     });
 
-    this.mealEdit
+    const imgSrcSub = this.mealEdit
       .get('imgInfo.imgSrc')
       ?.valueChanges.subscribe((value) => (this.previewImgSrc = value));
+
+    if (imgSrcSub) this.subscriptions.push(imgSrcSub);
   }
 
-  get imgSrcProvided() {
-    return (<FormArray>this.mealEdit?.get('imgInfo.imgSrc')).value.length > 0
-      ? true
-      : false;
+  get imgSrcProvided(): boolean {
+    const value = this.mealEdit?.get('imgInfo.imgSrc')?.value;
+    return value && value.trim().length > 0;
   }
 
   get vitamins() {
@@ -137,7 +150,7 @@ export class MealEditComponent implements OnInit {
   }
 
   onSubmit() {
-    this.shoppingListFetchService
+    const submitSub = this.shoppingListFetchService
       .getAllAvailableIngredientsNotUnique()
       .subscribe((allIngredients) => {
         if (this.mealEdit) {
@@ -179,9 +192,15 @@ export class MealEditComponent implements OnInit {
           this.router.navigate(['/meals', this.mealSelected?.name]);
         }
       });
+
+    this.subscriptions.push(submitSub);
   }
 
   cancelEdit() {
     this.router.navigate(['..'], { relativeTo: this.activatedRoute });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

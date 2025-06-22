@@ -1,134 +1,24 @@
 <section class="meal-list">
   <div class="actions">
-    <button class="btn new-recipe" [routerLink]="['new-recipe/edit']">
+    <button
+      class="btn new-recipe"
+      [routerLink]="['new-recipe/edit']"
+      (click)="addNewRecipe()"
+    >
       New recipe
     </button>
-    <button class="btn filter" (click)="filtersAdded = !filtersAdded">
+    <button
+      class="btn filter"
+      (click)="mealFilterService.filtersAdded = !mealFilterService.filtersAdded"
+    >
       Filter
     </button>
   </div>
   <!-- filter -->
-  <form
+  <app-meal-filter
     class="filter-menu"
-    [formGroup]="filters"
-    (ngSubmit)="onSubmitFilters()"
-    *ngIf="filtersAdded"
-  >
-    <h3>Filters</h3>
-    <div class="filter-option">
-      <p>Meal type:</p>
-      <select formControlName="mealType" [value]="filters.get('mealType')">
-        <option *ngFor="let mealType of mealTypes" [ngValue]="mealType">
-          {{ mealType }}
-        </option>
-      </select>
-    </div>
-    <div class="nutrition-facts" formGroupName="nutritionFacts">
-      <h3>Nutrition facts:</h3>
-
-      <!-- Calories -->
-      <div class="filter-option" formGroupName="calories">
-        <p>Calories (kcal)</p>
-        <input
-          class="input number"
-          type="number"
-          formControlName="min"
-          placeholder="Min"
-        />
-        <input
-          class="input number"
-          type="number"
-          formControlName="max"
-          placeholder="Max"
-        />
-      </div>
-
-      <!-- Protein -->
-      <div class="filter-option" formGroupName="protein">
-        <p>Protein (g)</p>
-        <input
-          class="input number"
-          type="number"
-          formControlName="min"
-          placeholder="Min"
-        />
-        <input
-          class="input number"
-          type="number"
-          formControlName="max"
-          placeholder="Max"
-        />
-      </div>
-
-      <!-- Fats -->
-      <div class="filter-option" formGroupName="fats">
-        <p>Fats (g)</p>
-        <input
-          class="input number"
-          type="number"
-          formControlName="min"
-          placeholder="Min"
-        />
-        <input
-          class="input number"
-          type="number"
-          formControlName="max"
-          placeholder="Max"
-        />
-      </div>
-
-      <!-- Carbohydrates -->
-      <div class="filter-option" formGroupName="carbohydrates">
-        <p>Carbohydrates (g)</p>
-        <input
-          class="input number"
-          type="number"
-          formControlName="min"
-          placeholder="Min"
-        />
-        <input
-          class="input number"
-          type="number"
-          formControlName="max"
-          placeholder="Max"
-        />
-      </div>
-
-      <!-- Vitamins -->
-      <div class="filter-option vitamin-filter" formArrayName="vitamins">
-        <h3 *ngIf="vitamins.length > 0">Vitamins:</h3>
-        <div
-          class="vitamin"
-          *ngFor="let vitamin of vitamins.controls; let i = index"
-        >
-          <input
-            class="input"
-            type="text"
-            [formControlName]="i"
-            [placeholder]="'Vitamin ' + (i + 1)"
-          />
-          <button
-            class="btn remove"
-            type="button"
-            (click)="vitamins.removeAt(i)"
-          >
-            X
-          </button>
-        </div>
-        <button class="btn vitamin" type="button" (click)="addVitaminFilter()">
-          Add vitamin filter
-        </button>
-      </div>
-    </div>
-
-    <div class="actions">
-      <button class="btn save" [disabled]="filters.invalid">save</button>
-      <button class="btn cancel" type="button" (click)="filtersAdded = false">
-        cancel
-      </button>
-      <button class="btn clear" (click)="clearFilter()">clear</button>
-    </div>
-  </form>
+    *ngIf="mealFilterService.filtersAdded"
+  ></app-meal-filter>
   <!-- list -->
   <div class="list">
     <input
@@ -139,13 +29,15 @@
     />
     <app-meal-item
       *ngFor="
-        let meal of allMeals
-          | mealFilter : mealFilterOptions
+        let meal of allMeals$
+          | async
+          | mealFilter : mealFilterService.mealFilterOptions
           | mealSearch : searchTerm
       "
       [meal]="meal"
       [routerLink]="['/meals/', meal.name]"
       routerLinkActive="router-link-active"
+      (click)="changeSelectedMeal(meal)"
     ></app-meal-item>
   </div>
 </section>

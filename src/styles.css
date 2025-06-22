@@ -8,6 +8,7 @@
 :root {
   /* Primary colors */
   --color-primary: #81c784; /* Soft green */
+  --color-primary-dark: #1e8b24; /* medium green */
   --color-secondary: #ffb74d; /* Soft orange */
 
   /* Neutrals */

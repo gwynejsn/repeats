@@ -1,9 +1,11 @@
 <section class="sign-up">
-  <div class="left">
+  <div class="left" #left>
+    <span class="loader" *ngIf="isLoading"></span>
     <form
       class="sign-up-form"
       #signUpForm="ngForm"
       (ngSubmit)="onSignUp(signUpForm.value)"
+      *ngIf="!isLoading"
     >
       <h3 class="website-title">RepEats</h3>
       <h4 class="welcome-label">Create Your Account</h4>
@@ -28,9 +30,7 @@
           />
           <select class="input" name="gender" ngModel required>
             <option value="" disabled selected>Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
           </select>
           <input
             type="email"
@@ -50,6 +50,8 @@
             required
             minlength="6"
           />
+
+          <p class="error" *ngIf="hasError">{{ errorMessage }}</p>
         </div>
 
         <div class="actions">

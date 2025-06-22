@@ -1,11 +1,31 @@
+/* Fixed Header */
 header {
   background-color: var(--color-secondary);
   color: var(--color-text);
   box-shadow: var(--shadow-elevated);
-  width: 100vw;
-  position: sticky;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  height: 4rem; /* adjust if needed */
+  padding: 2.5rem 2rem;
 }
 
+/* Reset body layout so it doesn’t center everything */
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+/* Content padding to not go under header */
+.content-area {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding-top: 6rem; /* should be > header height */
+}
+
+/* Nav Styling */
 a {
   text-decoration: none;
   color: var(--color-text);
@@ -24,12 +44,9 @@ li:active {
   font-size: var(--font-md);
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  margin: 0 1rem;
-}
-
-.btn {
-  background-color: var(--color-info);
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
 }
 
 .left-nav {
@@ -54,11 +71,18 @@ li:active {
   list-style: none;
   display: flex;
   gap: 1rem;
+  padding: 0;
+  margin: 0;
 }
 
 .right-nav {
   display: flex;
   align-items: center;
+  gap: 2rem;
+}
+
+.btn {
+  background-color: var(--color-info);
 }
 
 .manage {
@@ -68,4 +92,9 @@ li:active {
 .active {
   padding-bottom: 0.5rem;
   border-bottom: 3px solid var(--color-text);
+}
+
+.logout {
+  background-color: var(--color-danger-dark);
+  color: white;
 }

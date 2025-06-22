@@ -1,4 +1,6 @@
 .meals {
   display: flex;
   gap: 3rem;
+
+  margin-top: 7rem;
 }

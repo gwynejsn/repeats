@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 import { Ingredient } from '../shopping-list/ingredient.model';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Meal, MealIngredient, MealType } from './meal.model';
 
 export interface UniqueMeal {
@@ -39,7 +39,11 @@ interface RawMealDto {
 })
 export class MealFetchService {
   private http = inject(HttpClient);
-  private shoppingListService = inject(ShoppingListService);
+  private mealsURL = environment.apiUrl + '/meals';
+
+  set setUserId(id: string) {
+    this.mealsURL = environment.apiUrl + '/' + id + '/meals';
+  }
 
   private buildRawMealDto(meal: Meal): RawMealDto {
     const vitaminsArray = meal.vitaminsArray;
@@ -71,20 +75,14 @@ export class MealFetchService {
   }
 
   public postMeal(meal: Meal) {
-    return this.http.post(
-      'https://repeats-angular-default-rtdb.firebaseio.com/meals.json',
-      this.buildRawMealDto(meal),
-      {
-        observe: 'response',
-      }
-    );
+    return this.http.post(this.mealsURL + '.json', this.buildRawMealDto(meal), {
+      observe: 'response',
+    });
   }
 
   public getMeals() {
     return this.http
-      .get<{ [key: string]: RawMealDto }>(
-        'https://repeats-angular-default-rtdb.firebaseio.com/meals.json'
-      )
+      .get<{ [key: string]: RawMealDto }>(this.mealsURL + '.json')
       .pipe(
         map((mealsResponse) => {
           const mealsArray: UniqueMeal[] = [];
@@ -140,21 +138,17 @@ export class MealFetchService {
 
   public deleteMeal(mealId: string) {
     console.log('deleting id ' + mealId);
-    return this.http.delete(
-      `https://repeats-angular-default-rtdb.firebaseio.com/meals/${mealId}.json`
-    );
+    return this.http.delete(this.mealsURL + `/${mealId}.json`);
   }
 
   public deleteAllMeals() {
     console.log('deleting all meals');
-    return this.http.delete(
-      `https://repeats-angular-default-rtdb.firebaseio.com/meals.json`
-    );
+    return this.http.delete(this.mealsURL + '.json');
   }
 
   public patchMeal(mealId: string, meal: Meal) {
     return this.http.patch(
-      `https://repeats-angular-default-rtdb.firebaseio.com/meals/${mealId}.json`,
+      this.mealsURL + `/${mealId}.json`,
       this.buildRawMealDto(meal)
     );
   }

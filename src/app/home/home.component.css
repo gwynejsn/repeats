@@ -1,5 +1,85 @@
-p {
-  position: fixed;
-  top: 50%;
-  left: 50%;
+.hero {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.brand {
+  font-weight: bold;
+  font-size: 3rem;
+  position: relative;
+  color: var(--color-primary-dark);
+}
+
+.leaf-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.leaf {
+  position: absolute;
+  width: 2.5rem;
+  top: -1rem;
+  left: 0.2rem;
+  transform: rotate(-20deg);
+  pointer-events: none;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+.tagline {
+  padding-top: 1rem;
+}
+
+.description {
+  font-size: 0.8rem;
+  max-width: 600px;
+  padding: 0.5rem;
+}
+
+.food-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.food-image {
+  width: 300px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hidden by default */
+.food-name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--color-primary-dark);
+  color: #fff;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* Show on hover */
+.food-image:hover .food-name {
+  opacity: 0.8;
 }

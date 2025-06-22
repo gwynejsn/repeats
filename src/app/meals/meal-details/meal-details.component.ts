@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import { ConfirmBoxComponent } from '../../reusable-components/confirm-box/confirm-box.component';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
 import { Meal } from '../meal.model';
 import { MealsService } from '../meals.service';
+import { selectMealSelected } from '../state/meals.selectors';
 
 @Component({
   selector: 'app-meal-details',
@@ -14,16 +16,16 @@ import { MealsService } from '../meals.service';
 })
 export class MealDetailsComponent implements OnInit {
   private mealsService = inject(MealsService);
-  private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private shoppingListService = inject(ShoppingListService);
-  mealSelected: Meal | undefined;
+  private store$ = inject(Store);
+  mealSelected!: Meal | null;
   confirmDeleteDiv = false;
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((param) => {
-      this.mealSelected = this.mealsService.getMeal(param['meal-name']);
-    });
+    this.store$
+      .pipe(select(selectMealSelected))
+      .subscribe((mealSelected) => (this.mealSelected = mealSelected));
   }
 
   addToShoppingList() {

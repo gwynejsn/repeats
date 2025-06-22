@@ -3,6 +3,7 @@
   height: 80vh;
   display: flex;
   box-shadow: var(--shadow-elevated);
+  margin-top: 7rem;
 }
 
 .right {

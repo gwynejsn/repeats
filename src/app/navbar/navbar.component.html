@@ -14,14 +14,14 @@
               >Shopping List</a
             >
           </li>
-          <li class="authentication sign-up">
+          <li class="authentication sign-up" *ngIf="!(isLoggedIn$ | async)">
             <a
               [routerLink]="['/authentication', 'sign-in']"
               routerLinkActive="active"
               >sign-in</a
             >
           </li>
-          <li class="authentication sign-up">
+          <li class="authentication sign-up" *ngIf="!(isLoggedIn$ | async)">
             <a
               [routerLink]="['/authentication', 'sign-up']"
               routerLinkActive="active"
@@ -32,13 +32,9 @@
       </div>
     </div>
     <div class="right-nav">
-      <div class="dropdown manage-recipe-dropdown">
-        <button class="btn">Manage</button>
-        <div class="dropdown-content">
-          <a>Save data</a>
-          <a>Fetch data</a>
-        </div>
-      </div>
+      <button class="btn logout" *ngIf="isLoggedIn$ | async" (click)="logout()">
+        Logout
+      </button>
     </div>
   </nav>
 </header>

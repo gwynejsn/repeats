@@ -2,13 +2,10 @@ import { Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
+import { GsapTestComponent } from './gsap-test-component/gsap-test-component.component';
 import { HomeComponent } from './home/home.component';
-import { MealDetailsComponent } from './meals/meal-details/meal-details.component';
-import { MealEditComponent } from './meals/meal-edit/meal-edit.component';
-import { MealNoSelectedComponent } from './meals/meal-no-selected/meal-no-selected.component';
-import { MealsComponent } from './meals/meals.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { authenticationGuard } from './shared/guards/authentication.guard';
 
 export const routes: Routes = [
   {
@@ -31,29 +28,21 @@ export const routes: Routes = [
   },
   {
     path: 'meals',
-    component: MealsComponent,
-    children: [
-      {
-        path: '',
-        component: MealNoSelectedComponent,
-      },
-      {
-        path: ':meal-name',
-        component: MealDetailsComponent,
-      },
-      {
-        path: 'new-recipe/edit',
-        component: MealEditComponent,
-      },
-      {
-        path: ':meal-name/edit',
-        component: MealEditComponent,
-      },
-    ],
+    loadChildren: () =>
+      import('./meals/meals.routes').then((r) => r.mealsRoutes),
+    canActivate: [authenticationGuard],
   },
   {
     path: 'shopping-list',
-    component: ShoppingListComponent,
+    loadComponent: () =>
+      import('./shopping-list/shopping-list.component').then(
+        (c) => c.ShoppingListComponent
+      ),
+    canActivate: [authenticationGuard],
+  },
+  {
+    path: 'test',
+    component: GsapTestComponent,
   },
   {
     path: '**',

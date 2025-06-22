@@ -17,6 +17,7 @@
   justify-content: center;
   align-items: center;
   color: var(--color-text);
+  margin-top: 7rem;
 }
 table {
   width: 80vw;
