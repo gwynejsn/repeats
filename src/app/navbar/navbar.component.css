@@ -8,8 +8,7 @@ header {
   top: 0;
   left: 0;
   z-index: 1000;
-  height: 4rem; /* adjust if needed */
-  padding: 2.5rem 2rem;
+  padding: 1.5rem 2rem;
 }
 
 /* Reset body layout so it doesn’t center everything */
@@ -97,4 +96,49 @@ li:active {
 .logout {
   background-color: var(--color-danger-dark);
   color: white;
+}
+
+.hamburger {
+  display: none;
+  background-color: var(--color-primary);
+}
+.logout.navigation {
+  display: none;
+}
+
+@media screen and (max-width: 700px) {
+  .main-nav {
+    align-items: start;
+  }
+  .hamburger {
+    display: inline-block;
+  }
+  .left-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .navigation {
+    display: none;
+    transition: max-height 0.5s ease;
+  }
+
+  .pages,
+  .navigation.show {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .active {
+    padding-bottom: 0.3rem;
+  }
+
+  .logout.navigation.show {
+    display: inline-block;
+  }
+  .right-nav > .logout {
+    display: none;
+  }
 }

@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, inject, PLATFORM_ID } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 import { selectIsLoggedIn } from '../user/state/user.selectors';
 
 @Component({
@@ -13,6 +14,7 @@ import { selectIsLoggedIn } from '../user/state/user.selectors';
 })
 export class HomeComponent implements AfterViewInit {
   private store$ = inject(Store);
+  private platformId = inject(PLATFORM_ID);
   isLoggedIn = false;
   constructor() {
     this.store$
@@ -48,7 +50,12 @@ export class HomeComponent implements AfterViewInit {
   ];
 
   ngAfterViewInit(): void {
-    this.animateLeafFall();
+    gsap.registerPlugin(ScrollTrigger);
+    if (isPlatformBrowser(this.platformId)) {
+      this.animateLeafFall();
+      this.animateFoodImage();
+      this.animatePlates();
+    }
   }
 
   animateLeafFall() {
@@ -56,8 +63,59 @@ export class HomeComponent implements AfterViewInit {
       y: -150,
       x: 50,
       rotation: 180,
-      duration: 3,
+      duration: 2,
       ease: 'power1.inOut',
+      scrollTrigger: {
+        trigger: '.hero',
+        toggleActions: 'play none restart none', // on enter, on leave, on enter back, on leave back
+      },
+    });
+  }
+
+  animateFoodImage() {
+    gsap.from('.food-image', {
+      y: 600,
+      ease: 'power1.out',
+      duration: 0.5,
+      stagger: 0.1,
+    });
+  }
+
+  animatePlates() {
+    gsap.from('.feature-img-top', {
+      y: 200,
+      rotation: 360,
+      ease: 'power1.inOut',
+      scrollTrigger: {
+        trigger: '.features',
+        start: 'top 60%',
+        end: '+=400',
+        scrub: true,
+      },
+    });
+
+    gsap.from('.feature-img-left', {
+      x: 200,
+      rotation: 360,
+      ease: 'power1.inOut',
+      scrollTrigger: {
+        trigger: '.features',
+        start: 'top 60%',
+        end: '+=400',
+        scrub: true,
+      },
+    });
+
+    gsap.from('.feature-img-right', {
+      x: -200,
+      rotation: 360,
+      ease: 'power1.inOut',
+      scrollTrigger: {
+        trigger: '.features',
+        start: 'top 60%',
+        end: '+=400',
+        scrub: true,
+      },
     });
   }
 }

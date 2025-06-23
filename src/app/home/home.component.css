@@ -1,13 +1,14 @@
+/* hero section */
 .hero {
-  height: 100vh;
+  min-height: 90vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 1rem;
   box-sizing: border-box;
+  margin-top: 7rem;
 }
 .brand {
   font-weight: bold;
@@ -39,7 +40,7 @@ h1 {
 }
 
 .description {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   max-width: 600px;
   padding: 0.5rem;
 }
@@ -49,7 +50,7 @@ h1 {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  padding: 1rem;
+  padding: 2rem 1rem;
 }
 
 .food-image {
@@ -61,7 +62,7 @@ h1 {
   border-radius: 1rem;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-elevated);
 }
 
 /* Hidden by default */
@@ -82,4 +83,146 @@ h1 {
 /* Show on hover */
 .food-image:hover .food-name {
   opacity: 0.8;
+}
+
+.section-label {
+  text-align: center;
+  color: var(--color-primary-dark);
+  padding: 1rem;
+}
+/* features */
+
+.features {
+  min-height: 100vh; /* full viewport */
+  padding: 1rem;
+}
+.main-features {
+  display: grid;
+  height: 80vh;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr; /* two equal-height rows */
+  padding: 1.5rem; /* this is fine as long as it's not excessive */
+  box-sizing: border-box;
+  background-color: white;
+  overflow: hidden; /* prevent scrollbars */
+  row-gap: 1.5rem;
+}
+
+.feature {
+  border-radius: 20px;
+  box-shadow: var(--shadow-elevated);
+  border: solid 2px var(--color-primary);
+}
+
+.feature,
+.feature-img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* must fill grid cell */
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.feature-img {
+  width: 100%;
+  max-width: 350px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.desc {
+  text-align: center;
+}
+
+/* Footer section */
+.footer {
+  width: 100vw;
+  height: fit-content;
+  background-color: var(--color-text);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4rem;
+  box-shadow: var(--shadow-elevated);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-primary);
+}
+
+.link:hover {
+  opacity: 0.8;
+}
+
+.question {
+  font-size: 1.2rem;
+}
+@media screen and (max-width: 800px) {
+  .food-image {
+    width: 300px;
+    height: 300px;
+  }
+  .question {
+    font-size: 1rem;
+    padding-bottom: 1rem;
+  }
+  .footer {
+    font-size: 0.8rem;
+    align-items: start;
+  }
+}
+@media screen and (max-width: 700px) {
+  .food-image {
+    width: 200px;
+    height: 200px;
+  }
+  .main-features {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, auto);
+    grid-template-areas:
+      "f1 img1"
+      "img2 f2"
+      "f3 img3";
+    gap: 1rem;
+  }
+
+  .f1 {
+    grid-area: f1;
+  }
+  .f2 {
+    grid-area: f2;
+  }
+  .f3 {
+    grid-area: f3;
+  }
+  .img1 {
+    grid-area: img1;
+  }
+  .img2 {
+    grid-area: img2;
+  }
+  .img3 {
+    grid-area: img3;
+  }
+  .feature-img {
+    width: 200px;
+    height: 200px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .brand,
+  h1 {
+    font-size: 2rem;
+  }
+  .leaf {
+    width: 1.5rem;
+    top: -0.5rem;
+  }
+  .main-features {
+    grid-template-columns: 1fr 1fr;
+  }
 }

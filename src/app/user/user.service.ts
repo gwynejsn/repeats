@@ -66,7 +66,7 @@ export class UserService {
                 userObject.gender,
                 userObject.email,
                 idToken,
-                new Date(+expiresIn * 1000)
+                new Date(expiresIn)
               )
             );
           }

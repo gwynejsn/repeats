@@ -20,6 +20,8 @@
   border-radius: var(--radius);
   border: solid 3px var(--color-border);
   width: 30vw;
+  height: 80vh;
+  overflow: scroll;
 }
 
 .meal-img-src {

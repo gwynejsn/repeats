@@ -35,68 +35,71 @@
     </div>
   </div>
 </header>
-<!-- 
-<section class="why-repeats">
-  <h2>🌟 Why RepEats?</h2>
-  <ul>
-    <li>
-      <strong>✅ Personalized Lists:</strong> Tailor your shopping list to your
-      diet and goals – vegan, keto, or just smarter choices.
-    </li>
-    <li>
-      <strong>✅ Nutrient Insights:</strong> Get vitamin, mineral, and macro
-      breakdowns for every item.
-    </li>
-    <li>
-      <strong>✅ Smart Suggestions:</strong> Receive intelligent recommendations
-      to balance your nutrients.
-    </li>
-    <li>
-      <strong>✅ Visual Tracking:</strong> See your health progress as you shop
-      and repeat your best habits.
-    </li>
-  </ul>
-</section> -->
-<!--
-<section class="how-it-works">
-  <h2>🛒 How It Works</h2>
-  <ol>
-    <li>
-      <strong>Add Foods You Love:</strong> From avocado to salmon, start with
-      your favorites.
-    </li>
-    <li>
-      <strong>Learn What’s Inside:</strong> Understand each food’s nutrient
-      value.
-    </li>
-    <li>
-      <strong>Get Recommendations:</strong> Fill in nutrient gaps with smart
-      suggestions.
-    </li>
-    <li>
-      <strong>Save and Reuse:</strong> Your list stays with you every week.
-    </li>
-  </ol>
-</section>
 
-<section class="purpose">
-  <h2>🧠 Eat with Purpose. Repeat with Ease.</h2>
-  <p>
-    RepEats isn’t just a list — it’s a commitment to better living, one grocery
-    trip at a time.
-  </p>
-  <p>
-    Whether you're meal-prepping, shopping for the family, or staying
-    consistent, RepEats helps you build smarter habits — and stick to them.
-  </p>
-</section>
+<section class="features">
+  <h1 class="section-label" #featuresSection>Features</h1>
+  <div class="main-features">
+    <!-- Row 1 -->
+    <div class="feature f1">
+      <div class="desc">
+        <h2>🍽️ Explore Meals</h2>
+        <p>Discover balanced meals designed to fuel your lifestyle.</p>
+      </div>
+    </div>
+    <div class="feature-img-container img1">
+      <img src="assets/imgs/plates/1.png" class="feature-img feature-img-top" />
+    </div>
+    <div class="feature f2">
+      <div class="desc">
+        <h2>🛒 Smarter Shopping</h2>
+        <p>Manage your shopping list with filters, edits, and search.</p>
+      </div>
+    </div>
 
-<section class="cta">
-  <h2>🚀 Ready to elevate your grocery game?</h2>
-  <p><a href="#">👉 Get Started</a> or <a href="#">Log In</a></p>
+    <!-- Row 2 -->
+    <div class="feature-img-container img2">
+      <img
+        src="assets/imgs/plates/2.png"
+        class="feature-img feature-img-left"
+      />
+    </div>
+    <div class="feature f3">
+      <div class="desc">
+        <h2>🔍 Fast Search & Filters</h2>
+        <p>Find exactly what matches your goals with precision filters.</p>
+      </div>
+    </div>
+    <div class="feature-img-container img3">
+      <img
+        src="assets/imgs/plates/3.png"
+        class="feature-img feature-img-right"
+      />
+    </div>
+  </div>
 </section>
 
 <footer class="footer">
-  <p>🥑 Powered by knowledge. Backed by science. Made for you.</p>
-  <p><strong>RepEats</strong> – Repeat what fuels you.</p>
-</footer> -->
+  <section class="cta">
+    <h2 class="question">Ready to elevate your grocery game?</h2>
+    <p *ngIf="!isLoggedIn">
+      <a class="link sign-up" [routerLink]="['/authentication', 'sign-up']"
+        >Get Started</a
+      >
+      or
+      <a class="link sign-in" [routerLink]="['/authentication', 'sign-in']"
+        >Log In</a
+      >
+    </p>
+    <p *ngIf="isLoggedIn">
+      <a class="link meals" [routerLink]="['/meals']">Go to meals</a>
+    </p>
+  </section>
+
+  <div class="credits">
+    <p>Powered by knowledge. Backed by science. Made for you.</p>
+    <p>
+      Made by
+      <a href="https://github.com/gwynejsn" class="link github">Gwyne</a> ♥︎
+    </p>
+  </div>
+</footer>

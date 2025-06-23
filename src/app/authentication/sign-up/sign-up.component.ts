@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   inject,
+  OnDestroy,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,7 +19,7 @@ import { AuthenticationService } from '../authentication.service';
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
 })
-export class SignUpComponent implements AfterViewInit {
+export class SignUpComponent implements AfterViewInit, OnDestroy {
   private authService = inject(AuthenticationService);
   private router = inject(Router);
   hasError = false;
@@ -55,24 +56,32 @@ export class SignUpComponent implements AfterViewInit {
       });
   }
 
+  private animationCtx: gsap.Context | null = null;
+  @ViewChild('left') left!: ElementRef<HTMLDivElement>;
+
   ngAfterViewInit(): void {
     this.animateImg();
   }
-  @ViewChild('left') left!: ElementRef<HTMLDivElement>;
 
   animateImg() {
     const leftWidth = this.left.nativeElement.offsetWidth;
 
-    gsap.from('.right', {
-      x: -leftWidth,
-      duration: 1,
-      ease: 'power2.inOut',
-    });
+    this.animationCtx = gsap.context(() => {
+      gsap.from('.right', {
+        x: -leftWidth,
+        duration: 1,
+        ease: 'power2.inOut',
+      });
 
-    gsap.from('.left', {
-      x: leftWidth,
-      duration: 1,
-      ease: 'power2.inOut',
+      gsap.from('.left', {
+        x: leftWidth,
+        duration: 1,
+        ease: 'power2.inOut',
+      });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.animationCtx?.revert();
   }
 }

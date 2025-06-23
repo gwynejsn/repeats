@@ -52,7 +52,7 @@ export class UserEffects {
         const rawUser = localStorage.getItem('user');
         if (rawUser) {
           const user: User = this.userService.jsonToUser(rawUser);
-          if (new Date() <= user.tokenExpiration) return of(removeUser()); // if expired
+          if (new Date() >= user.tokenExpiration) return of(removeUser()); // if expired
           return of(changeUser({ newUser: user }));
         } else return EMPTY;
       })

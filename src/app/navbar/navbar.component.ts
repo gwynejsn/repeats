@@ -8,6 +8,7 @@ import { selectIsLoggedIn } from '../user/state/user.selectors';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -17,6 +18,7 @@ export class NavbarComponent {
   private router = inject(Router);
   private store$ = inject(Store);
   isLoggedIn$: Observable<boolean>;
+  menuOpen = false; // closed by default
 
   constructor() {
     this.isLoggedIn$ = this.store$.pipe(select(selectIsLoggedIn));
@@ -25,5 +27,6 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
     this.router.navigate(['']);
+    this.menuOpen = false;
   }
 }

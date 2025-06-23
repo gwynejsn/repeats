@@ -4,7 +4,8 @@
       <div class="logo" [routerLink]="['/']">
         <h1>RepEats</h1>
       </div>
-      <div class="navigation">
+
+      <div class="navigation" [class.show]="menuOpen">
         <ul class="pages">
           <li class="meals">
             <a [routerLink]="['/meals']" routerLinkActive="active">Meals</a>
@@ -30,8 +31,19 @@
           </li>
         </ul>
       </div>
+      <button
+        class="btn logout navigation"
+        [class.show]="menuOpen"
+        *ngIf="isLoggedIn$ | async"
+        (click)="logout()"
+      >
+        Logout
+      </button>
     </div>
     <div class="right-nav">
+      <button class="btn hamburger" (click)="menuOpen = !menuOpen">
+        {{ menuOpen ? "✖" : "☰" }}
+      </button>
       <button class="btn logout" *ngIf="isLoggedIn$ | async" (click)="logout()">
         Logout
       </button>
