@@ -84,12 +84,8 @@ export class AuthenticationService {
                 if (!user) {
                   throw new Error('User not found');
                 }
-                console.log('fetch user info= ', res.expiresIn);
                 this.store$.dispatch(changeUser({ newUser: user }));
 
-                localStorage.setItem('user', JSON.stringify(user));
-                console.log(+res.expiresIn * 1000);
-                this.autoLogout(+res.expiresIn * 1000); // 1 hour from firebase
                 return user;
               })
             );

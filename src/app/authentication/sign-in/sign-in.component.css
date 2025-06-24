@@ -65,3 +65,23 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 700px) {
+  /* becomes bottom */
+  .left {
+    height: 20%;
+    width: 100%;
+  }
+
+  /* becomes top */
+  .right {
+    height: 80%;
+  }
+
+  .sign-in {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -58,6 +58,11 @@ export class UserService {
           const users: User[] = [];
           for (const id in res) {
             const userObject = res[id];
+            const expirationDate = new Date(
+              Date.now() + Number(expiresIn) * 1000
+            );
+            console.log('Expires at:', expirationDate);
+
             users.push(
               new User(
                 userObject.id,
@@ -66,7 +71,7 @@ export class UserService {
                 userObject.gender,
                 userObject.email,
                 idToken,
-                new Date(expiresIn)
+                expirationDate
               )
             );
           }

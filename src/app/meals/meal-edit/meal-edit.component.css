@@ -19,7 +19,7 @@
   padding: 2em;
   border-radius: var(--radius);
   border: solid 3px var(--color-border);
-  width: 30vw;
+  max-width: 90vw;
   height: 80vh;
   overflow: scroll;
 }

@@ -49,7 +49,6 @@ export class SignInComponent implements AfterViewInit, OnDestroy {
 
   animateImg() {
     const rightWidth = this.right.nativeElement.offsetWidth;
-
     this.animationCtx = gsap.context(() => {
       gsap.from('.left', {
         x: rightWidth,

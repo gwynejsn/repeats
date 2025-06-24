@@ -1,6 +1,16 @@
 .meals {
   display: flex;
-  gap: 3rem;
+  gap: 1rem;
+  padding: 0 2rem;
 
   margin-top: 7rem;
+}
+
+@media screen and (max-width: 700px) {
+  .meals {
+    flex-direction: column-reverse;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+  }
 }

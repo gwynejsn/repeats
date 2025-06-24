@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of, switchMap, tap } from 'rxjs';
+import { AuthenticationService } from '../../authentication/authentication.service';
 import { MealFetchService } from '../../meals/meal-fetch.service';
 import { initMeals } from '../../meals/state/meals.actions';
 import { ShoppingListFetchService } from '../../shopping-list/shopping-list-fetch.service';
@@ -10,7 +11,7 @@ import { changeUser, fetchUser, removeUser } from './user.actions';
 
 export class UserEffects {
   private actions$ = inject(Actions);
-  // private store$ = inject(st)
+  private authenticationService = inject(AuthenticationService);
   private userService = inject(UserService);
   private mealFetchService = inject(MealFetchService);
   private shoppingListFetchService = inject(ShoppingListFetchService);
@@ -57,6 +58,24 @@ export class UserEffects {
         } else return EMPTY;
       })
     )
+  );
+
+  setAutoLogout = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(changeUser),
+        tap(({ newUser }) => {
+          const delay = newUser.tokenExpiration.getTime() - Date.now();
+
+          console.log('Expires later at (ms) ', delay);
+          if (delay > 0) {
+            this.authenticationService.autoLogout(delay);
+          }
+        })
+      ),
+    {
+      dispatch: false,
+    }
   );
 
   loadMeals = createEffect(() =>

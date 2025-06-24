@@ -4,12 +4,13 @@ import { Router, RouterModule } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../authentication/authentication.service';
+import { OutsideClickDirective } from '../shared/directives/outside-click.directive';
 import { selectIsLoggedIn } from '../user/state/user.selectors';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, OutsideClickDirective],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })

@@ -82,40 +82,52 @@ export class HomeComponent implements AfterViewInit {
   }
 
   animatePlates() {
-    gsap.from('.feature-img-top', {
-      y: 200,
-      rotation: 360,
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: '.features',
-        start: 'top 60%',
-        end: '+=400',
-        scrub: true,
+    const mm = gsap.matchMedia();
+    mm.add(
+      {
+        isMobile: '(max-width: 700px)',
+        isDesktop: '(min-width: 701px)',
       },
-    });
+      (context) => {
+        const { isMobile, isDesktop } = context.conditions as gsap.Conditions;
 
-    gsap.from('.feature-img-left', {
-      x: 200,
-      rotation: 360,
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: '.features',
-        start: 'top 60%',
-        end: '+=400',
-        scrub: true,
-      },
-    });
+        gsap.from('.feature-img-top', {
+          x: isDesktop ? 0 : -200,
+          y: isDesktop ? 200 : 0,
+          rotation: 360,
+          ease: 'power1.inOut',
+          scrollTrigger: {
+            trigger: '.features',
+            start: 'top 60%',
+            end: '+=400',
+            scrub: true,
+          },
+        });
 
-    gsap.from('.feature-img-right', {
-      x: -200,
-      rotation: 360,
-      ease: 'power1.inOut',
-      scrollTrigger: {
-        trigger: '.features',
-        start: 'top 60%',
-        end: '+=400',
-        scrub: true,
-      },
-    });
+        gsap.from('.feature-img-left', {
+          x: 200,
+          rotation: 360,
+          ease: 'power1.inOut',
+          scrollTrigger: {
+            trigger: '.features',
+            start: 'top 60%',
+            end: '+=400',
+            scrub: true,
+          },
+        });
+
+        gsap.from('.feature-img-right', {
+          x: -200,
+          rotation: 360,
+          ease: 'power1.inOut',
+          scrollTrigger: {
+            trigger: '.features',
+            start: 'top 60%',
+            end: '+=400',
+            scrub: true,
+          },
+        });
+      }
+    );
   }
 }

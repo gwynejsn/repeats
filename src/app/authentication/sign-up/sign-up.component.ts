@@ -66,18 +66,16 @@ export class SignUpComponent implements AfterViewInit, OnDestroy {
   animateImg() {
     const leftWidth = this.left.nativeElement.offsetWidth;
 
-    this.animationCtx = gsap.context(() => {
-      gsap.from('.right', {
-        x: -leftWidth,
-        duration: 1,
-        ease: 'power2.inOut',
-      });
+    gsap.from('.right', {
+      x: -leftWidth,
+      duration: 1,
+      ease: 'power2.inOut',
+    });
 
-      gsap.from('.left', {
-        x: leftWidth,
-        duration: 1,
-        ease: 'power2.inOut',
-      });
+    gsap.from('.left', {
+      x: leftWidth,
+      duration: 1,
+      ease: 'power2.inOut',
     });
   }
 

@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { SignInComponent } from './authentication/sign-in/sign-in.component';
 import { SignUpComponent } from './authentication/sign-up/sign-up.component';
-import { GsapTestComponent } from './gsap-test-component/gsap-test-component.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { authenticationGuard } from './shared/guards/authentication.guard';
@@ -39,10 +38,6 @@ export const routes: Routes = [
         (c) => c.ShoppingListComponent
       ),
     canActivate: [authenticationGuard],
-  },
-  {
-    path: 'test',
-    component: GsapTestComponent,
   },
   {
     path: '**',
