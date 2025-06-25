@@ -1,4 +1,10 @@
-# Repeats
+# Repeats 🍽️
+
+[Live Demo](https://repeats-angular.web.app)
+
+Repeats is a minimalist shopping list app that lets you customize meals and build your grocery list with ease.
+
+---
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
 
