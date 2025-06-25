@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
+import { environment } from '../../environments/environment.development';
 import { changeUser, fetchUser, removeUser } from '../user/state/user.actions';
 import { Gender, User } from '../user/user.model';
 import { UserService } from '../user/user.service';
@@ -25,14 +26,13 @@ export class AuthenticationService {
   private router = inject(Router);
   private store$ = inject(Store);
 
-  private apiKey = 'AIzaSyA62U1z7B0RObsUmP0g2jJH9aJhg47CyUM';
   private signUpEndpoint =
     'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-    this.apiKey;
+    environment.apiKey;
 
   private signInEndpoint =
     'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' +
-    this.apiKey;
+    environment.apiKey;
 
   private autoLogoutInterval: any;
 
