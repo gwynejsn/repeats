@@ -2,6 +2,11 @@ import { createAction, props } from '@ngrx/store';
 import { UniqueMeal } from '../meal-fetch.service';
 import { Meal } from '../meal.model';
 
+export const setMealsLoader = createAction(
+  '[Meals] set meal loader',
+  props<{ isLoading: boolean }>()
+);
+
 export const initMeals = createAction('[Meals] Init');
 
 export const changeUniqueMeals = createAction(

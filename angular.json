@@ -24,7 +24,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css", "src/components.css"],
+            "styles": [
+              "src/styles.css",
+              "src/components.css",
+              "src/skeleton.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -83,7 +87,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/styles.css", "src/components.css"],
+            "styles": [
+              "src/styles.css",
+              "src/components.css",
+              "src/skeleton.css"
+            ],
             "scripts": []
           }
         }

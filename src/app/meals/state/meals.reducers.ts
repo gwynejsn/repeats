@@ -5,7 +5,14 @@ import {
   changeMealSelected,
   changeUniqueMeals,
   initMeals,
+  setMealsLoader,
 } from './meals.actions';
+
+export const initialMealLoader = false;
+export const mealLoaderReducer = createReducer(
+  initialMealLoader,
+  on(setMealsLoader, (state, { isLoading }) => isLoading)
+);
 
 export const initialUniqueMeals: UniqueMeal[] = [];
 export const uniqueMealsReducer = createReducer(
@@ -15,8 +22,6 @@ export const uniqueMealsReducer = createReducer(
     return state;
   }),
   on(changeUniqueMeals, (currMeals, { newUniqueMeals }) => {
-    console.log('here');
-    console.log(newUniqueMeals);
     return newUniqueMeals;
   })
 );

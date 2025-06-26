@@ -14,6 +14,7 @@ import { UniqueMeal } from './meals/meal-fetch.service';
 import { Meal } from './meals/meal.model';
 import { MealsEffects } from './meals/state/meals.effects';
 import {
+  mealLoaderReducer,
   mealSelectedReducer,
   uniqueMealsReducer,
 } from './meals/state/meals.reducers';
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(withInterceptors([authenticationInterceptor])),
     provideStore(),
+    provideState('mealLoader', mealLoaderReducer),
     provideState('user', userReducer),
     provideState('uniqueMeals', uniqueMealsReducer),
     provideState('mealSelected', mealSelectedReducer),
@@ -38,4 +40,5 @@ export interface StateStructure {
   user: User | null;
   uniqueMeals: UniqueMeal[];
   mealSelected: Meal | null;
+  mealLoader: boolean;
 }

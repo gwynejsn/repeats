@@ -14,21 +14,25 @@ enum BorderColors {
   styleUrl: './meal-item.component.css',
 })
 export class MealItemComponent implements OnInit {
-  @Input({ required: true }) meal!: Meal;
+  @Input() meal!: Meal;
+  @Input() skeleton: boolean = false;
+
   borderColor!: string;
   ngOnInit(): void {
-    switch (this.meal.type) {
-      case MealType.BREAKFAST:
-        this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
-        break;
-      case MealType.LUNCH:
-        this.borderColor = 'var(' + BorderColors.LUNCH + ')';
-        break;
-      case MealType.DINNER:
-        this.borderColor = 'var(' + BorderColors.DINNER + ')';
-        break;
-      default:
-        this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
+    if (this.meal) {
+      switch (this.meal.type) {
+        case MealType.BREAKFAST:
+          this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
+          break;
+        case MealType.LUNCH:
+          this.borderColor = 'var(' + BorderColors.LUNCH + ')';
+          break;
+        case MealType.DINNER:
+          this.borderColor = 'var(' + BorderColors.DINNER + ')';
+          break;
+        default:
+          this.borderColor = 'var(' + BorderColors.BREAKFAST + ')';
+      }
     }
   }
 }

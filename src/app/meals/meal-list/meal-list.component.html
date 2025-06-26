@@ -27,17 +27,26 @@
       [(ngModel)]="searchTerm"
       placeholder="Search meals by name..."
     />
-    <app-meal-item
-      *ngFor="
-        let meal of allMeals$
-          | async
-          | mealFilter : mealFilterService.mealFilterOptions
-          | mealSearch : searchTerm
-      "
-      [meal]="meal"
-      [routerLink]="['/meals/', meal.name]"
-      routerLinkActive="router-link-active"
-      (click)="changeSelectedMeal(meal)"
-    ></app-meal-item>
+    <ng-container *ngIf="(isLoading$ | async) === false; else loading">
+      <ng-container *ngIf="allMeals$ | async as meals">
+        <app-meal-item
+          *ngFor="
+            let meal of meals
+              | mealFilter : mealFilterService.mealFilterOptions
+              | mealSearch : searchTerm
+          "
+          [meal]="meal"
+          [routerLink]="['/meals/', meal.name]"
+          routerLinkActive="router-link-active"
+          (click)="changeSelectedMeal(meal)"
+        ></app-meal-item>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #loading>
+      <app-meal-item [skeleton]="true"></app-meal-item>
+      <app-meal-item [skeleton]="true"></app-meal-item>
+      <app-meal-item [skeleton]="true"></app-meal-item>
+    </ng-template>
   </div>
 </section>

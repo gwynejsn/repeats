@@ -1,4 +1,4 @@
-<div class="meal-item card">
+<div class="meal-item card" *ngIf="!skeleton">
   <div class="details">
     <div>
       <h3 class="meal-name">{{ meal.name }}</h3>
@@ -22,5 +22,22 @@
       [alt]="meal.name"
       [ngStyle]="{ 'border-color': borderColor }"
     />
+  </div>
+</div>
+
+<div class="skeleton-card" *ngIf="skeleton">
+  <div class="details">
+    <div>
+      <div class="skeleton skeleton-text title"></div>
+      <div class="skeleton skeleton-text subtitle"></div>
+    </div>
+    <div class="nutrition-facts">
+      <div class="skeleton skeleton-text small"></div>
+      <div class="skeleton skeleton-text small"></div>
+      <div class="skeleton skeleton-text small"></div>
+    </div>
+  </div>
+  <div class="image">
+    <div class="skeleton skeleton-circle"></div>
   </div>
 </div>

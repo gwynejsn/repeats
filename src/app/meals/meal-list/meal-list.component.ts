@@ -8,7 +8,7 @@ import { MealFilterPipe } from '../../shared/pipes/meal-filter.pipe';
 import { MealSearchPipe } from '../../shared/pipes/meal-search.pipe';
 import { Meal } from '../meal.model';
 import { changeMealSelected } from '../state/meals.actions';
-import { selectMeals } from '../state/meals.selectors';
+import { selectMealLoader, selectMeals } from '../state/meals.selectors';
 import { MealItemComponent } from './meal-item/meal-item.component';
 import { MealFilterComponent } from './mealfilter/meal-filter.component';
 import { MealFilterService } from './mealfilter/meal-filter.service';
@@ -37,9 +37,11 @@ export class MealListComponent {
   searchTerm = '';
 
   allMeals$: Observable<Meal[]>;
+  isLoading$: Observable<boolean>;
 
   constructor() {
     this.allMeals$ = this.store$.pipe(select(selectMeals));
+    this.isLoading$ = this.store$.pipe(select(selectMealLoader));
   }
 
   addNewRecipe() {

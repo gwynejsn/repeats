@@ -11,6 +11,7 @@ import {
   initMeals,
   patchMeal,
   patchMealSuccess,
+  setMealsLoader,
 } from './meals.actions';
 import { selectUniqueMeals } from './meals.selectors';
 
@@ -22,17 +23,19 @@ export class MealsEffects {
   refetchUniqueMeals = createEffect(() =>
     this.actions$.pipe(
       ofType(initMeals, patchMealSuccess, deleteMealSuccess),
-      switchMap(() =>
-        this.mealFetchService.getMeals().pipe(
-          map((uniqueMeals) => {
-            console.log('inside refetch');
-            return changeUniqueMeals({ newUniqueMeals: uniqueMeals });
-          }),
+      switchMap(() => {
+        this.store$.dispatch(setMealsLoader({ isLoading: true }));
+
+        return this.mealFetchService.getMeals().pipe(
+          switchMap((uniqueMeals) => [
+            setMealsLoader({ isLoading: false }),
+            changeUniqueMeals({ newUniqueMeals: uniqueMeals }),
+          ]),
           catchError((err) =>
             of({ type: '[Meals API] Fetch Failed', error: err })
           )
-        )
-      )
+        );
+      })
     )
   );
 
