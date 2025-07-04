@@ -1,13 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { MealFetchService, UniqueMeal } from './meal-fetch.service';
+import { UniqueMeal } from './meal-fetch.service';
 import { Meal } from './meal.model';
 import { deleteMeal, patchMeal } from './state/meals.actions';
 import { selectUniqueMeals } from './state/meals.selectors';
 
 @Injectable({ providedIn: 'root' })
 export class MealsService {
-  private mealFetchService = inject(MealFetchService);
   private store$ = inject(Store);
   private allUniqueMeals: UniqueMeal[] = [];
 
